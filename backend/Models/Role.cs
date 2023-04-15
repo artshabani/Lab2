@@ -11,11 +11,7 @@ namespace backend.Models
 
         public string Name { get; set; }
          
-        public ICollection<UserRole> UserRoles { get; set; }
+        
 
-        public Role()
-    {
-        UserRoles = new List<UserRole>();
-    }
     }
 }

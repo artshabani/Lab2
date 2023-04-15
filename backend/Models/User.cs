@@ -28,15 +28,7 @@ public class User
         set { _passwordHash = BCrypt.Net.BCrypt.HashPassword(value); }
     }
 
-    public ICollection<UserRole> UserRoles { get; set; }
-
-        public User()
-    {
-        UserRoles = new List<UserRole>
-        {
-            new UserRole { RoleId = 1 } // assuming the ID of User role is 1
-        };
-    }
+   
 
 
 }
