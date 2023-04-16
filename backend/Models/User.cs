@@ -28,10 +28,6 @@ public class User
         get { return _passwordHash; }
         set { _passwordHash = BCrypt.Net.BCrypt.HashPassword(value); }
     }
-
-   
-
-
 }
 
 }
