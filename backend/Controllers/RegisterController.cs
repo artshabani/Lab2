@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using backend.Models;
 
 namespace backend.Controllers
 {
@@ -11,10 +12,15 @@ namespace backend.Controllers
     public class RegisterController : ControllerBase
     {
         [HttpGet]
-        //tash kjo me View() nuk bon spo ma kap qysh mi testu me routes
-        public IActionResult Index()
+        public IActionResult Get()
         {
-            return View();
+            return Ok("Hello from RegisterController!");
+        }
+
+        [HttpPost]
+        public IActionResult Post([FromBody] Register register)
+        {
+            return Ok("Registration successful!");
         }
     }
 }
