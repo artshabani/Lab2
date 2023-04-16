@@ -1,4 +1,6 @@
-using backend.Data; 
+using backend.Data;
+using backend.Services;
+using backend.Services.Interfaces;
 using Microsoft.EntityFrameworkCore; 
 using Microsoft.Extensions.DependencyInjection; 
 using Microsoft.Extensions.Hosting; 
@@ -11,6 +13,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext")));
+
+builder.Services.AddScoped<IUserService, UserService>();
 
 
 builder.Services.AddCors(options =>
