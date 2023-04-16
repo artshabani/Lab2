@@ -5,7 +5,12 @@ using backend.Services.Interfaces;
 using Microsoft.EntityFrameworkCore; 
 using Microsoft.Extensions.DependencyInjection; 
 using Microsoft.Extensions.Hosting; 
+
 using System;
+
+using Microsoft.AspNetCore.Identity;
+using backend.Data;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,8 +21,17 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext")));
 
+
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
+
+
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<AppDbContext>();
+
+// builder.Services.AddDefaultIdentity<ApplicationUser>()
+//         .AddEntityFrameworkStores<AppDbContext>()
+//         .AddDefaultTokenProviders();
 
 
 builder.Services.AddCors(options =>
@@ -42,7 +56,9 @@ app.UseRouting();
 
 app.UseCors("CorsPolicy");
 
+app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
 app.MapControllerRoute(
 	name: "default",
