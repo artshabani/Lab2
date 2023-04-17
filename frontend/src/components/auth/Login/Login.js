@@ -1,28 +1,28 @@
 import React, { Component } from "react";
 
 export class Login extends Component {
-    constructor(){
+    constructor() {
         super();
-        this.state={
+        this.state = {
             username: null,
-            password:null,
-            login:false,
-            store:null
+            password: null,
+            login: false,
+            store: null
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.storeCollector()
     }
 
-    storeCollector(){
-        let store=JSON.parse(localStorage.getItem('login'));
-        if(store && store.login){
-            this.setState({login:true,store:store})
+    storeCollector() {
+        let store = JSON.parse(localStorage.getItem('login'));
+        if (store && store.login) {
+            this.setState({ login: true, store: store })
         }
     }
 
-    login(){
+    login() {
         const username = document.getElementById('username_field').value;
         const password = document.getElementById('password_field').value;
 
@@ -31,67 +31,44 @@ export class Login extends Component {
             password: password
         };
 
-        fetch('http://localhost:5000/api/login' , {
-            method:"POST",
+        fetch('http://localhost:5000/api/login', {
+            method: "POST",
             headers: {
                 'Content-Type': 'application/json',
-                'accept':'application/json'
+                'accept': 'application/json'
             },
-            body:JSON.stringify(requestBody)
-        }).then((response)=>{
-            response.json().then((result)=>{
-                console.warn("result",result);
-                localStorage.setItem('loginToken', result)
-                this.storeCollector()
-            })
-        })
-    }
-
-    post(){
-        let token = "Bearer" + localStorage.getItem('loginToken');
-        fetch('http://localhost:5000/api/users' , {
-            method:"POST",
-            headers:{
-                'Authorization':token
-            },
-            body:JSON.stringify(this.state)
-        }).then((response)=>{
-            response.json().then((result)=>{
-                this.setState({
-                    response:result.message
+            body: JSON.stringify(requestBody)
+        }).then((response) => {
+            if (response.ok) {
+                console.log('Login successful');
+                response.json().then((result) => {
+                    console.warn("result", result);
+                    localStorage.setItem('loginToken', result)
+                    this.storeCollector()
                 })
-                console.warn("result",result);
-            })
+            } else {
+                console.error('Login failed');
+            }
         })
     }
 
-    // handleLogin = async () => {
-    //     const username = document.getElementById('username_field').value;
-    //     const password = document.getElementById('password_field').value;
-
-    //     const requestBody = {
-    //         username: username,
-    //         password: password,
-    //     };
-
-    //     try {
-    //         const response = await fetch('http://localhost:5000/api/login', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify(requestBody),
-    //         });
-
-    //         if (response.ok) {
-    //             console.log('Login successful');
-    //         } else {
-    //             console.error('Login failed');
-    //         }
-    //     } catch (error) {
-    //         console.error('Login error', error);
-    //     }
-    // }
+    post() {
+        let token = "Bearer" + localStorage.getItem('loginToken');
+        fetch('http://localhost:5000/api/users', {
+            method: "POST",
+            headers: {
+                'Authorization': token
+            },
+            body: JSON.stringify(this.state)
+        }).then((response) => {
+            response.json().then((result) => {
+                this.setState({
+                    response: result.message
+                })
+                console.warn("result", result);
+            })
+        })
+    }
 
     render() {
         return (
@@ -107,7 +84,7 @@ export class Login extends Component {
                 </div>
 
                 <div className="button">
-                    <button onClick={()=>{this.login()}} className="btn btn-primary">Log in</button>
+                    <button onClick={() => { this.login() }} className="btn btn-primary">Log in</button>
                 </div>
             </div>
         )

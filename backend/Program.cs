@@ -3,8 +3,6 @@ using backend.Data;
 using backend.Services;
 using backend.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using System;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
@@ -14,8 +12,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-//using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,10 +59,11 @@ builder.Services.AddAuthentication(x =>
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers();
-// builder.Services.AddSwaggerGen(c =>
-// {
-//     c.SwaggerDoc("v1", new OpenApiInfo { Title = "backend", Version = "v1" });
-// });
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "backend", Version = "v1" });
+});
+
 
 //FOR IDENTITY
 //builder.Services.AddDefaultIdentity<ApplicationUser>()
@@ -72,25 +71,6 @@ builder.Services.AddControllers();
 //     .AddEntityFrameworkStores<AppDbContext>()
 //     .AddDefaultTokenProviders();
 
-//adding authentication
-// builder.Services.AddAuthentication(options => {
-//     options.DefaultAuthenticationScheme = JwtBearerDefaults.AuthenticationScheme;
-//     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-// })
-
-//adding jwt bearer
-// .AddJwtBearer(options => {
-//     options.SaveToken = true;
-//     options.RequireHttpMetaData = false;
-//     options.TokenValidationParameters = new TokenValidationParameters(){
-//         ValidateIssuer = true,
-//         ValudateAudience = true,
-//         ValidAudience = configuration["JWT:ValidAudience"],
-//         ValidIssuer = configuration["JWT:ValidIssuer"],
-//         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
-//     };
-// });
 
 builder.Services.AddCors(options =>
 {
