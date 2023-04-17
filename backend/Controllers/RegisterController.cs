@@ -24,12 +24,9 @@ namespace backend.Controllers
         private readonly IConfiguration _configuration;
         private readonly IUserService _userService;
         public RegisterController(IConfiguration configuration, IUserService userService)
-            //, IHttpContextAccessor httpContextAccessor
         {
             _configuration = configuration;
             _userService = userService;
-            //i want to get the user that registered
-            //var Id = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
         }
         [HttpGet]
         public async Task<IEnumerable<User>> GetAllUsers()
