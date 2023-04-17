@@ -20,18 +20,14 @@ namespace backend.Models
         [Required]
         public string Genre { get; set; }
 
-        
         public int Duration { get; set; }
 
-       
         public string Image { get; set; }
 
-        
         public string Video { get; set; }
 
-        
         public string Trailer { get; set; }
 
-        
+        public int ViewCount { get; set; }
     }
 }
