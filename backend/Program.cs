@@ -2,15 +2,20 @@ using backend;
 using backend.Data;
 using backend.Services;
 using backend.Services.Interfaces;
-using Microsoft.EntityFrameworkCore; 
-using Microsoft.Extensions.DependencyInjection; 
-using Microsoft.Extensions.Hosting; 
-
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System;
-
+using System.Text;
 using Microsoft.AspNetCore.Identity;
 using backend.Data;
-
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+//using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,14 +30,67 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
 
+var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]);
 
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
-    .AddEntityFrameworkStores<AppDbContext>();
+builder.Services.AddAuthentication(x =>
+          {
+              x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+              x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+          })
+          .AddJwtBearer(x =>
+          {
+              x.RequireHttpsMetadata = false;
+              x.SaveToken = true;
 
-// builder.Services.AddDefaultIdentity<ApplicationUser>()
-//         .AddEntityFrameworkStores<AppDbContext>()
-//         .AddDefaultTokenProviders();
+              x.TokenValidationParameters = new TokenValidationParameters
 
+              {
+                  ValidateIssuerSigningKey = true,
+                  IssuerSigningKey = new SymmetricSecurityKey(key),
+                  ValidIssuers = new string[] { builder.Configuration["Jwt:Issuer"] },
+                  ValidAudiences = new string[] { builder.Configuration["Jwt:Issuer"] },
+                  ValidateIssuer = true,
+                  ValidateAudience = true,
+                  ValidateLifetime = true
+
+              };
+
+          });
+
+//i want to get the user that registered
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddControllers();
+// builder.Services.AddSwaggerGen(c =>
+// {
+//     c.SwaggerDoc("v1", new OpenApiInfo { Title = "backend", Version = "v1" });
+// });
+
+//FOR IDENTITY
+//builder.Services.AddDefaultIdentity<ApplicationUser>()
+// builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+//     .AddEntityFrameworkStores<AppDbContext>()
+//     .AddDefaultTokenProviders();
+
+//adding authentication
+// builder.Services.AddAuthentication(options => {
+//     options.DefaultAuthenticationScheme = JwtBearerDefaults.AuthenticationScheme;
+//     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+// })
+
+//adding jwt bearer
+// .AddJwtBearer(options => {
+//     options.SaveToken = true;
+//     options.RequireHttpMetaData = false;
+//     options.TokenValidationParameters = new TokenValidationParameters(){
+//         ValidateIssuer = true,
+//         ValudateAudience = true,
+//         ValidAudience = configuration["JWT:ValidAudience"],
+//         ValidIssuer = configuration["JWT:ValidIssuer"],
+//         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
+//     };
+// });
 
 builder.Services.AddCors(options =>
 {
@@ -61,8 +119,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapControllerRoute(
-	name: "default",
-	pattern: "{controller=Movies}/{action=Index}/{id?}");
+    name: "default",
+    pattern: "{controller=Movies}/{action=Index}/{id?}");
 
 Console.WriteLine("-------->Seeding data...");
 using var scope = app.Services.CreateScope();
