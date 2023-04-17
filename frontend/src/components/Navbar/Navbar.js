@@ -14,8 +14,8 @@ const Navbar = () => {
       
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home</a>
+          <li class="nav-item">
+            <Link to="/" className="nav-link">Home</Link>
             </li>
             <li class="nav-item">
             <Link to="/login" className="nav-link">Login</Link>
@@ -23,17 +23,13 @@ const Navbar = () => {
             <li class="nav-item">
             <Link to="/signup" className="nav-link">Signup</Link>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
+            <li class="nav-item">
+                  <Link to="/users" className="nav-link">Users</Link>
             </li>
+            <li class="nav-item">
+                  <Link to="/movies" className="nav-link">Movies</Link>
+            </li>
+            
           </ul>
         </div>
       </nav>
