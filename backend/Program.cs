@@ -75,9 +75,11 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", builder => builder
-        .AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader());
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .AllowAnyOrigin());
+        
+        
 });
 
 var app = builder.Build();

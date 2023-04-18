@@ -8,9 +8,15 @@ import MovieDetails from './Movies/MovieDetails';
 import MoviePlayer from './Movies/MoviePlayer'; 
 import UserList from './Users/UserList'; 
 import HomePage from './HomePage';
+import EditMovie from './Movies/EditMovie';
+
+import UserDetails from './Users/UserDetails';
+import UserEdit from './Users/UserEdit';
+
 import Dashboard from './Dashboard/Dashboard';
 import ContactUs from './ContactUs/ContactUs';
 import ThankYou from './ContactUs/ThankYou';
+
 
 const Pages = () => {
     return (
@@ -22,6 +28,9 @@ const Pages = () => {
                 <Route path='/movies/:id' element={<MovieDetails />} /> 
                 <Route path='/PlayMovie/:id' element={<MoviePlayer />} /> 
                 <Route path='/users/' element={<UserList />} /> 
+                <Route path='/UserDetails/:id' element={<UserDetails />} /> 
+                <Route path='/EditUser/:id' element={<UserEdit />} /> 
+                <Route path='/EditMovie/:id' element={<EditMovie />} />
                 <Route path='/dashboard' element={<Dashboard />} /> 
                 <Route path='/contactus' element={<ContactUs />} /> 
                 <Route path='/thankyou' element={<ThankYou />} /> 

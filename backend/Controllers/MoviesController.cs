@@ -54,15 +54,12 @@ namespace backend.Controllers
         }
 
         // PUT: api/movies/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> EditMovie(int id, Movie movie)
+        [HttpPut]
+        public async Task<IActionResult> EditMovie(Movie movie)
         {
-            if (id != movie.Id)
-            {
-                return BadRequest();
-            }
+            
 
-            var result = await _movieService.EditMovie(id, movie);
+            var result = await _movieService.EditMovie(movie.Id, movie);
 
             if (!result)
             {

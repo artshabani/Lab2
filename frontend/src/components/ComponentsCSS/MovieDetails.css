@@ -1,0 +1,9 @@
+.movie-card {
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.movie-card button {
+  display: block;
+  margin: 20px auto;
+}

@@ -50,10 +50,10 @@ namespace backend.Controllers
         }
 
         // PUT: api/users/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> EditUser(int id, User user)
+        [HttpPut]
+        public async Task<IActionResult> EditUser(User user)
         {
-            var success = await _userService.EditUser(id, user);
+            var success = await _userService.EditUser(user.Id, user);
 
             if (!success)
             {
