@@ -4,6 +4,8 @@ import { Pagination } from "@material-ui/lab";
 import "../ComponentsCSS/UserList.css";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import {BarLoader,DoubleBubble, SlidingPebbles} from "react-spinner-animated";
+import 'react-spinner-animated/dist/index.css'
 
 function UserList() {
   const [users, setUsers] = useState([]);
@@ -61,7 +63,14 @@ function UserList() {
   }
 
   return (
+    
     <div className="container">
+      {isLoading ? (
+  <div className="center">
+    <BarLoader text={"Loading..."} 
+    center={false} width={"150px"} height={"150px"}/>
+  </div>
+) : (
       <div className="table-responsive">
         <div style={{ border: "1.5px solid white" }} className="table-wrapper">
           <div className="table-title">
@@ -159,6 +168,7 @@ function UserList() {
           </div>
         </div>
       </div>
+)}
     </div>
   );
 }
