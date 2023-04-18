@@ -31,7 +31,7 @@ export class Login extends Component {
             password: password
         };
 
-        fetch('http://localhost:5000/api/login', {
+        fetch('http://localhost:5000/api/login/login', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -39,13 +39,15 @@ export class Login extends Component {
             },
             body: JSON.stringify(requestBody)
         }).then((response) => {
+            response.json().then((result) => {
+                console.warn("result", result);
+                localStorage.setItem('loginToken', result)
+                this.storeCollector()
+            })
+
+
             if (response.ok) {
                 console.log('Login successful');
-                response.json().then((result) => {
-                    console.warn("result", result);
-                    localStorage.setItem('loginToken', result)
-                    this.storeCollector()
-                })
             } else {
                 console.error('Login failed');
             }
@@ -72,23 +74,64 @@ export class Login extends Component {
 
     render() {
         return (
-            <div className="center" style={{ alignItems: 'center' }}>
-                <h1>Log In</h1>
+            <>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
+                        <form class='card p-3 bg-light' style={{ width: 700, display: 'inline-block', top: 30 }} >
+                        <div class="form-outline mb-4">
+                            <input type="email" id="username_field" class="form-control" />
+                            <label class="form-label" for="loginName">Username</label>
+                        </div>
 
-                <div className="txt_field">
-                    <input type="text" id="username_field" /> <br />
-                </div>
+                        <div class="form-outline mb-4">
+                            <input type="password" id="password_field" class="form-control" />
+                            <label class="form-label" for="loginPassword">Password</label>
+                        </div>
 
-                <div className="txt_field">
-                    <input type="password" id="password_field" /> <br />
-                </div>
+                        <div class="row mb-4">
+                            <div class="col-md-6 d-flex justify-content-center">
 
-                <div className="button">
-                    <button onClick={() => { this.login() }} className="btn btn-primary">Log in</button>
+                                <div class="form-check mb-3 mb-md-0">
+                                    <input class="form-check-input" type="checkbox" value="" id="loginCheck" checked />
+                                    <label class="form-check-label" for="loginCheck"> Remember me </label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 d-flex justify-content-center">
+
+                                <a href="#!">Forgot password?</a>
+                            </div>
+                        </div>
+
+
+                        <button onClick={() => { this.login() }} type="submit" class="btn btn-primary" style={{ width: 80 }}>Log in</button>
+
+
+                        <div class="text-center">
+                            <p>Not a member? <a href="#!">Register</a></p>
+                        </div>
+                    </form>
                 </div>
-            </div>
-        )
+            </div >
+            </>
+  )
     }
 }
 
 export default Login;
+
+            // <div className="center" style={{ alignItems: 'center' }}>
+            //     <h1>Log In</h1>
+
+            //     <div className="txt_field">
+            //         <input type="text" id="username_field" /> <br />
+            //     </div>
+
+            //     <div className="txt_field">
+            //         <input type="password" id="password_field" /> <br />
+            //     </div>
+
+            //     <div className="button">
+            //         <button onClick={() => { this.login() }} className="btn btn-primary">Log in</button>
+            //     </div>
+            // </div>
