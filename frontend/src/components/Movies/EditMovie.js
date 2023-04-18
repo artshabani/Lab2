@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { redirect, useParams } from "react-router-dom";
+import{ createBrowserHistory} from "history";
 import { useNavigate } from "react-router-dom";
 
 function EditMovie(props) {
@@ -13,6 +14,8 @@ function EditMovie(props) {
   const [trailer, setTrailer] = useState("");
   const [viewCount, setViewCount] = useState("");
   const { id } = useParams();
+  const navigate = useNavigate();
+  const history = createBrowserHistory();
 
   useEffect(() => {
     axios.get(`http://localhost:5000/api/movies/${id}`).then((response) => {
@@ -27,8 +30,8 @@ function EditMovie(props) {
     });
   }, [id]);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = async (event) => {
+   event.preventDefault();
     const updatedMovie = {
         id: id,
       title: title,
@@ -40,14 +43,19 @@ function EditMovie(props) {
       trailer: trailer,
       viewCount: viewCount,
     };
-    axios
-      .put(`http://localhost:5000/api/movies`, updatedMovie)
-      .then(() => {
-        useNavigate.push(`/movies/${id}`)
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      
+     try {
+        
+        await axios.put(`http://localhost:5000/api/movies`, updatedMovie).then((then) => console.log("Something"))
+        navigate('/movies');
+        
+     } catch (error) {
+        console.log(error);
+     }
+     
+      
+   
+       
   };
 
   return (
@@ -145,5 +153,6 @@ function EditMovie(props) {
     </div>
   );
 }
+
 
 export default EditMovie;

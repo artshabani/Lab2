@@ -19,7 +19,7 @@ function MoviePlayer() {
       ...movie,
       viewCount: movie.viewCount + 1,
     };
-    axios.put(`http://localhost:5000/api/movies/${id}`, updatedMovie);
+    axios.put(`http://localhost:5000/api/movies`, updatedMovie);
   };
 
   if (!movie) {
