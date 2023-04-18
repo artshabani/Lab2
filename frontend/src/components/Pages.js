@@ -8,6 +8,8 @@ import MovieDetails from './Movies/MovieDetails';
 import MoviePlayer from './Movies/MoviePlayer'; 
 import UserList from './Users/UserList'; 
 import HomePage from './HomePage';
+import UserDetails from './Users/UserDetails';
+import UserEdit from './Users/UserEdit';
 
 const Pages = () => {
     return (
@@ -21,6 +23,8 @@ const Pages = () => {
                 <Route path='/movies/:id' element={<MovieDetails />} /> 
                 <Route path='/PlayMovie/:id' element={<MoviePlayer />} /> 
                 <Route path='/users/' element={<UserList />} /> 
+                <Route path='/UserDetails/:id' element={<UserDetails />} /> 
+                <Route path='/EditUser/:id' element={<UserEdit />} /> 
             </Routes>
         </>
     );
