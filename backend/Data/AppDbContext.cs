@@ -4,12 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using backend.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace backend.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<AppUser>
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        public AppDbContext(DbContextOptions options) : base(options)
         {
         }
 
@@ -17,9 +18,6 @@ namespace backend.Data
 
 
         public DbSet<Movie> Movies { get; set; }
-
-
-
 
          
     }

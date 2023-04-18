@@ -5,6 +5,7 @@ using backend.Models;
 using backend.Services.Interfaces;
 using Microsoft.AspNetCore.Cors;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace backend.Controllers
 {
@@ -22,6 +23,7 @@ namespace backend.Controllers
 
         // GET: api/movies
         [HttpGet]
+        [Authorize]
         public async Task<IEnumerable<Movie>> GetAllMovies()
         {
             return await _movieService.GetAllMovies();

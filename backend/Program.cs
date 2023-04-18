@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.OpenApi.Models;
+using backend.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext")));
 
+builder.Services.AddIdentityCore<AppUser>(o => {
+    o.Password.RequireNonAlphanumeric = false;
+})
+.AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<AppDbContext>()
+.AddSignInManager<SignInManager<AppUser>>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
@@ -39,20 +46,13 @@ builder.Services.AddAuthentication(x =>
           {
               x.RequireHttpsMetadata = false;
               x.SaveToken = true;
-
               x.TokenValidationParameters = new TokenValidationParameters
-
               {
                   ValidateIssuerSigningKey = true,
                   IssuerSigningKey = new SymmetricSecurityKey(key),
-                  ValidIssuers = new string[] { builder.Configuration["Jwt:Issuer"] },
-                  ValidAudiences = new string[] { builder.Configuration["Jwt:Issuer"] },
-                  ValidateIssuer = true,
-                  ValidateAudience = true,
-                  ValidateLifetime = true
-
+                  ValidateIssuer = false,
+                  ValidateAudience = false
               };
-
           });
 
 //i want to get the user that registered

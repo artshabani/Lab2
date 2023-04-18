@@ -30,17 +30,15 @@ export class Signup extends Component {
         const username = document.getElementById('username_field').value;
         const email = document.getElementById('email_field').value;
         const password = document.getElementById('password_field').value;
-        const confirmpassword = document.getElementById('confirmpassword_field').value;
-
+    
         const requestBody = {
             name: name,
             username: username,
             email: email,
-            password: password,
-            confirmpassword: confirmpassword
+            password: password
         };
 
-        fetch('http://localhost:5000/api/register', {
+        fetch('http://localhost:5000/api/account/register', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -131,11 +129,6 @@ export class Signup extends Component {
                 Password:
                 <div className="txt_field">
                     <input type="password" id="password_field" /> <br />
-                </div>
-
-                Confirm Password:
-                <div className="txt_field">
-                    <input type="password" id="confirmpassword_field" /> <br />
                 </div>
 
                 <div className="button">

@@ -18,8 +18,6 @@ const Pages = () => {
         <Navbar/>
             <Routes>
                 <Route path='/' element={<HomePage />} />
-                <Route path='/signup' element={<Signup />} />
-                <Route path='/login' element={<Login />} />
                 <Route path='/movies' element={<MovieList />} />
                 <Route path='/movies/:id' element={<MovieDetails />} /> 
                 <Route path='/PlayMovie/:id' element={<MoviePlayer />} /> 
@@ -27,6 +25,8 @@ const Pages = () => {
                 <Route path='/dashboard' element={<Dashboard />} /> 
                 <Route path='/contactus' element={<ContactUs />} /> 
                 <Route path='/thankyou' element={<ThankYou />} /> 
+                <Route path='/signup' element={<Signup />} />
+                <Route path='/login' element={<Login />} />
             </Routes>
         </>
     );

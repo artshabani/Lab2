@@ -4,7 +4,7 @@ export class Login extends Component {
     constructor() {
         super();
         this.state = {
-            username: null,
+            email: null,
             password: null,
             login: false,
             store: null
@@ -23,15 +23,15 @@ export class Login extends Component {
     }
 
     login() {
-        const username = document.getElementById('username_field').value;
+        const email = document.getElementById('email_field').value;
         const password = document.getElementById('password_field').value;
 
         const requestBody = {
-            username: username,
+            email: email,
             password: password
         };
 
-        fetch('http://localhost:5000/api/login/login', {
+        fetch('http://localhost:5000/api/account/login', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ export class Login extends Component {
 
     post() {
         let token = "Bearer" + localStorage.getItem('loginToken');
-        fetch('http://localhost:5000/api/users', {
+        fetch('http://localhost:5000/api/movies', {
             method: "POST",
             headers: {
                 'Authorization': token
@@ -75,7 +75,22 @@ export class Login extends Component {
     render() {
         return (
             <>
-                <div class="tab-content">
+            <div className="center" style={{ alignItems: 'center' }}>
+                <h1>Log In</h1>
+
+                <div className="txt_field">
+                    <input type="text" id="email_field" /> <br />
+                </div>
+
+                <div className="txt_field">
+                    <input type="password" id="password_field" /> <br />
+                </div>
+
+                <div className="button">
+                    <button onClick={() => { this.login() }} className="btn btn-primary">Log in</button>
+                </div>
+            </div>
+                {/* <div class="tab-content">
                     <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
                         <form class='card p-3 bg-light' style={{ width: 700, display: 'inline-block', top: 30 }} >
                         <div class="form-outline mb-4">
@@ -112,26 +127,10 @@ export class Login extends Component {
                         </div>
                     </form>
                 </div>
-            </div >
+            </div > */}
             </>
   )
     }
 }
 
 export default Login;
-
-            // <div className="center" style={{ alignItems: 'center' }}>
-            //     <h1>Log In</h1>
-
-            //     <div className="txt_field">
-            //         <input type="text" id="username_field" /> <br />
-            //     </div>
-
-            //     <div className="txt_field">
-            //         <input type="password" id="password_field" /> <br />
-            //     </div>
-
-            //     <div className="button">
-            //         <button onClick={() => { this.login() }} className="btn btn-primary">Log in</button>
-            //     </div>
-            // </div>
