@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using backend.Models;
 using backend.Services.Interfaces;
 using Microsoft.AspNetCore.Cors;
+using System.Linq;
 
 namespace backend.Controllers
 {
@@ -25,6 +26,7 @@ namespace backend.Controllers
         {
             return await _movieService.GetAllMovies();
         }
+
 
         // GET: api/movies/5
         [HttpGet("{id}")]

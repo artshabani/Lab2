@@ -1,0 +1,7 @@
+*.dll
+appsettings.json
+.vs/
+bin/
+obj/
+*.suo
+*.user

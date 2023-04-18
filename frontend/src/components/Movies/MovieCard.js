@@ -9,6 +9,8 @@ function MovieCard({ movie }) {
         <h3>{movie.title}</h3>
       </Link>
       <p>{movie.description}</p>
+      <b><p>{movie.genre}</p></b>
+      <p>{movie.viewCount} views</p> 
     </div>
   );
 }
