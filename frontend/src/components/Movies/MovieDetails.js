@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
+import MovieCard from "./MovieCard";
+import "../ComponentsCSS/MovieDetails.css";
 
 function MovieDetails() {
   const [movie, setMovie] = useState(null);
@@ -17,9 +19,19 @@ function MovieDetails() {
   }
 
   return (
-    <div className="movie-details">
-      <h2>{movie.title}</h2>
-      <Link to={`/PlayMovie/${movie.id}`}><button>Play Movie</button></Link>
+    <div className="container">
+      <div className="row">
+        <div className="col-md-12">
+          <div className="movie-card-wrapper">
+            <div className="movie-card">
+              <MovieCard movie={movie} />
+              <Link to={`/PlayMovie/${movie.id}`}>
+                <button className="btn btn-primary">Play Movie</button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
