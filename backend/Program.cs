@@ -3,16 +3,10 @@ using backend.Data;
 using backend.Services;
 using backend.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
-using backend.Data;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.OpenApi.Models;
 using backend.Models;
 
@@ -58,28 +52,12 @@ builder.Services.AddAuthentication(x =>
 //i want to get the user that registered
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddControllers();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "backend", Version = "v1" });
-});
-
-
-//FOR IDENTITY
-//builder.Services.AddDefaultIdentity<ApplicationUser>()
-// builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-//     .AddEntityFrameworkStores<AppDbContext>()
-//     .AddDefaultTokenProviders();
-
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", builder => builder
     .AllowAnyMethod()
     .AllowAnyHeader()
     .AllowAnyOrigin());
-        
-        
 });
 
 var app = builder.Build();

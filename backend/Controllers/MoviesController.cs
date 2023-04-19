@@ -23,7 +23,7 @@ namespace backend.Controllers
 
         // GET: api/movies
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public async Task<IEnumerable<Movie>> GetAllMovies()
         {
             return await _movieService.GetAllMovies();

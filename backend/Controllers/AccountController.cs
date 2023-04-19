@@ -33,17 +33,12 @@ namespace backend.Controllers
             return await _userService.GetAllUsers();
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUserById(int id)
+
+        [HttpGet]
+        public async Task<ActionResult<AppUserDto>> GetUser()
         {
-            var user = await _userService.GetUserById(id);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return user;
+            var user =  await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+            return createUserObject(user);
         }
 
         [HttpPost("register")]
@@ -66,10 +61,6 @@ namespace backend.Controllers
             {
                 return BadRequest();
             }
-
-            //var createdUser = await _userService.CreateUser(user);
-
-            //return CreatedAtAction(nameof(GetUserById), new { id = createdUser.Id }, createdUser);
         }
 
         [HttpPost("login")]
@@ -134,16 +125,5 @@ namespace backend.Controllers
             return RedirectToAction("Index");
         }*/
 
-        // [HttpGet]
-        // public IActionResult Get()
-        // {
-        //     return Ok("Hello from RegisterController!");
-        // }
-
-        // [HttpPost]
-        // public IActionResult Post([FromBody] Register register)
-        // {
-        //     return Ok("Registration successful!");
-        // }
     }
 }

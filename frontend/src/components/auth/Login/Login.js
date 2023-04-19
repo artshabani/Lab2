@@ -75,21 +75,22 @@ export class Login extends Component {
     render() {
         return (
             <>
-            <div className="center" style={{ alignItems: 'center' }}>
-                <h1>Log In</h1>
+                <div className="center" style={{ alignItems: 'center' }}>
+                    <h1>Log In</h1>
 
-                <div className="txt_field">
-                    <input type="text" id="email_field" /> <br />
-                </div>
+                    Email:
+                    <div className="txt_field">
+                        <input type="text" id="email_field" /><br />
+                    </div>
+                    Password:
+                    <div className="txt_field">
+                        <input type="password" id="password_field" /> <br />
+                    </div>
 
-                <div className="txt_field">
-                    <input type="password" id="password_field" /> <br />
+                    <div className="button">
+                        <button onClick={() => { this.login() }} className="btn btn-primary">Log in</button>
+                    </div>
                 </div>
-
-                <div className="button">
-                    <button onClick={() => { this.login() }} className="btn btn-primary">Log in</button>
-                </div>
-            </div>
                 {/* <div class="tab-content">
                     <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
                         <form class='card p-3 bg-light' style={{ width: 700, display: 'inline-block', top: 30 }} >
@@ -129,7 +130,7 @@ export class Login extends Component {
                 </div>
             </div > */}
             </>
-  )
+        )
     }
 }
 
