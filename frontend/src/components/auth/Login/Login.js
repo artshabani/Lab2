@@ -41,7 +41,7 @@ export class Login extends Component {
         }).then((response) => {
             response.json().then((result) => {
                 console.warn("result", result);
-                localStorage.setItem('loginToken', result)
+                localStorage.setItem('token', result.token)
                 this.storeCollector()
             })
 
@@ -55,7 +55,7 @@ export class Login extends Component {
     }
 
     post() {
-        let token = "Bearer" + localStorage.getItem('loginToken');
+        let token = "Bearer" + localStorage.getItem('token');
         fetch('http://localhost:5000/api/movies', {
             method: "POST",
             headers: {

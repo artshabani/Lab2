@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using backend.Models;
+using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +20,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext")));
 
-builder.Services.AddIdentityCore<AppUser>(o => {
+builder.Services.AddIdentityCore<AppUser>(o =>
+{
     o.Password.RequireNonAlphanumeric = false;
 })
 .AddRoles<IdentityRole>()
@@ -29,21 +31,15 @@ builder.Services.AddIdentityCore<AppUser>(o => {
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
 
-var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]);
+var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt"]));
 
-builder.Services.AddAuthentication(x =>
-          {
-              x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-              x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-          })
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
           .AddJwtBearer(x =>
           {
-              x.RequireHttpsMetadata = false;
-              x.SaveToken = true;
               x.TokenValidationParameters = new TokenValidationParameters
               {
                   ValidateIssuerSigningKey = true,
-                  IssuerSigningKey = new SymmetricSecurityKey(key),
+                  IssuerSigningKey = key,
                   ValidateIssuer = false,
                   ValidateAudience = false
               };
@@ -57,7 +53,9 @@ builder.Services.AddCors(options =>
     options.AddPolicy("CorsPolicy", builder => builder
     .AllowAnyMethod()
     .AllowAnyHeader()
-    .AllowAnyOrigin());
+    .AllowCredentials()
+    .WithExposedHeaders("WWW-Authenticate")
+    .WithOrigins("http://localhost:3000"));
 });
 
 var app = builder.Build();

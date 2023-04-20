@@ -1,8 +1,12 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
+import userData from '../auth/user';
+
 
 const Navbar = () => {
+  const {user} = userData();
+  console.log(user)
   return (
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <Link to="/" className="nav-link"><a class="navbar-brand" href="#">Navbar</a></Link>
@@ -29,6 +33,7 @@ const Navbar = () => {
           <li class="nav-item">
             <Link to="/signup" className="nav-link">Signup</Link>
           </li>
+
           <li class="nav-item">
             <Link to="/logout" className="nav-link">Log Out</Link>
           </li>

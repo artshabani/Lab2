@@ -30,7 +30,7 @@ export class Signup extends Component {
         const username = document.getElementById('username_field').value;
         const email = document.getElementById('email_field').value;
         const password = document.getElementById('password_field').value;
-    
+
         const requestBody = {
             name: name,
             username: username,
@@ -48,11 +48,9 @@ export class Signup extends Component {
         }).then((response) => {
             response.json().then((result) => {
                 console.warn("result", result);
-                localStorage.setItem('signupToken', JSON.stringify({
-                    signup: true,
-                    store: result.token
-                }))
-                this.storeCollector()
+                localStorage.setItem('token', result.token
+                )
+                //this.storeCollector()
             })
         })
     }
