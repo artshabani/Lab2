@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
+import userData from '../auth/user';
 import '../ComponentsCSS/Navbar.css';
 import profileIcon from '../ComponentsCSS/icons/profile.png';
 import settingIcon from '../ComponentsCSS/icons/setting.png';
@@ -10,6 +11,8 @@ import logoutIcon from '../ComponentsCSS/icons/logout.png';
 import filmaUbt from '../ComponentsCSS/icons/filmaUbt.png';
 
 const Navbar = () => {
+  const { user } = userData();
+  console.log(user);
   const toggleMenu = () => {
     const subMenu = document.getElementById('subMenu');
     subMenu.classList.toggle('open-menu');

@@ -3,12 +3,12 @@ using backend.Models;
 using backend.Services.Interfaces;
 using System.Security.Claims;
 using System.Text;
-using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Identity;
 using backend.DTO;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace backend.Controllers
 {
@@ -20,25 +20,30 @@ namespace backend.Controllers
         private readonly IUserService _userService;
         private readonly UserManager<AppUser> _userManager;
         public readonly SignInManager<AppUser> _signInManager;
-        public AccountController(IConfiguration configuration, IUserService userService, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
+        public readonly IHttpContextAccessor _accessor;
+        public AccountController(IConfiguration configuration, IUserService userService, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IHttpContextAccessor accessor)
         {
+            _accessor = accessor;
             _signInManager = signInManager;
             _userManager = userManager;
             _configuration = configuration;
             _userService = userService;
         }
-        [HttpGet]
-        public async Task<IEnumerable<User>> GetAllUsers()
-        {
-            return await _userService.GetAllUsers();
-        }
-
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<AppUserDto>> GetUser()
         {
-            var user =  await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
-            return createUserObject(user);
+            var email = _accessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user != null)
+            {
+                return createUserObject(user);
+            }
+            else
+            {
+                return Unauthorized("Unauthorized no user found");
+            }
         }
 
         [HttpPost("register")]
@@ -87,22 +92,29 @@ namespace backend.Controllers
 
         private string GenerateJwtToken(AppUser user)
         {
-            var securityKey = Encoding.UTF8.GetBytes(_configuration["Jwt:Secret"]);
-            var claims = new Claim[] {
+            var claims = new List<Claim> {
                 new Claim(ClaimTypes.NameIdentifier,user.Id),
                 new Claim(ClaimTypes.Name,user.Name),
                 new Claim(ClaimTypes.Name,user.UserName),
                 new Claim(ClaimTypes.Email,user.Email),
             };
 
-            var credentials = new SigningCredentials(new SymmetricSecurityKey(securityKey), SecurityAlgorithms.HmacSha256);
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt"]));
 
-            var tokenDescriptor = new JwtSecurityToken(_configuration["Jwt:Issuer"],
-                _configuration["Jwt:Issuer"],
-                expires: DateTime.Now.AddDays(7),
-                signingCredentials: credentials);
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature);
 
-            return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.Now.AddDays(7),
+                SigningCredentials = credentials
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(token);
         }
 
         private AppUserDto createUserObject(AppUser user)
@@ -116,14 +128,5 @@ namespace backend.Controllers
                 Token = GenerateJwtToken(user)
             };
         }
-
-        /*
-        [HttpPost]
-        public ActionResult Logout()
-        {
-            FormsAuthentication.SignOut();
-            return RedirectToAction("Index");
-        }*/
-
     }
 }

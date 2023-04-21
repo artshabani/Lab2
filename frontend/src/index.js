@@ -3,15 +3,27 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter} from "react-router-dom"
+import { BrowserRouter } from "react-router-dom"
+import axios from 'axios';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+axios.interceptors.request.use((config) => {
+  const token = "Bearer " + window.localStorage.getItem("token");
+
+  if (token) {
+    config.headers.Authorization = token;
+  }
+
+  return config;
+})
+
 root.render(
   <React.StrictMode>
 
     <BrowserRouter>
-    <App />
-  </BrowserRouter>
+      <App />
+    </BrowserRouter>
 
   </React.StrictMode>
 );
