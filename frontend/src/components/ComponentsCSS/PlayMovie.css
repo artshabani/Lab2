@@ -1,0 +1,23 @@
+p {
+  color: white;
+}
+
+.video-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background-image: url(../../../public/art.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+.video-player {
+  width: 1000px;
+  border: 1.5px solid white;
+}
+h2 {
+  color: white;
+}
