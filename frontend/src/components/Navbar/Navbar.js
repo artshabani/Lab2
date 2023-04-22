@@ -3,8 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../../redux/actions';
-import { Link } from 'react-router-dom';
-import userData from '../auth/user';
+// import userData from '../auth/user';
 import '../ComponentsCSS/Navbar.css';
 import profileIcon from '../ComponentsCSS/icons/profile.png';
 import settingIcon from '../ComponentsCSS/icons/setting.png';
@@ -15,8 +14,8 @@ import filmaUbt from '../ComponentsCSS/icons/filmaUbt.png';
 
 const Navbar = () => {
 
-  const { user } = userData();
-  console.log(user);
+  // const { user } = userData();
+  // console.log(user);
   const toggleMenu = () => {
     const subMenu = document.getElementById('subMenu');
     subMenu.classList.toggle('open-menu');
@@ -91,7 +90,9 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <a href="#">Logs</a>
+        <Link to="/logs">
+            <a href="#">Logs</a>
+          </Link>
         </li>
         {!state.user && (<>
             <li class="nav-item">
