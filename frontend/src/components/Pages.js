@@ -17,7 +17,6 @@ import UserEdit from './Users/UserEdit';
 import Dashboard from './Dashboard/Dashboard';
 import ContactUs from './ContactUs/ContactUs';
 import ThankYou from './ContactUs/ThankYou';
-import Logout from './auth/Login/Logout';
 
 const Pages = () => {
   return (
@@ -37,8 +36,7 @@ const Pages = () => {
         <Route path="/thankyou" element={<ThankYou />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/logout" element={<Logout />} />
-        <Route path="/Logs" element={<Logs />} />
+        <Route path="/logs" element={<Logs />} />
       </Routes>
     </>
   );

@@ -22,12 +22,12 @@ function App() {
     getUser();
   }, []);
 
-  if (loading) {
-    return <div className="center">
-      <BarLoader text={"Loading..."}
-        center={false} width={"150px"} height={"150px"} />
-    </div>
-  }
+  // if (loading) {
+  //   return <div className="center">
+  //     <BarLoader text={"Loading..."}
+  //       center={false} width={"150px"} height={"150px"} />
+  //   </div>
+  // }
 
   return (
     <div className="App">

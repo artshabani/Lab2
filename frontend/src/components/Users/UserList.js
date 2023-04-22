@@ -19,7 +19,7 @@ function UserList() {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/users').then((response) => {
+    axios.get('http://localhost:5000/api/account').then((response) => {
       setUsers(response.data);
       setIsLoading(false);
     });

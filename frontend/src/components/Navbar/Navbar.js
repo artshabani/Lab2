@@ -90,7 +90,9 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <a href="#">Logs</a>
+        <Link to="/logs">
+            <a href="#">Logs</a>
+          </Link>
         </li>
         {!state.user && (<>
             <li class="nav-item">
