@@ -5,6 +5,21 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom"
 import axios from 'axios';
+import { createStore } from 'redux';
+import { Provider, connect } from 'react-redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import rootReducer from './redux/reducers';
+import { setUser } from './redux/actions/index'
+import { PersistGate } from 'redux-persist/integration/react';
+import store  from './redux/store'
+
+// const ConnectedApp = connect(mapStateToProps, { setUser })(App);
+
+// const mapStateToProps = (state) => {
+//   return {
+//     user: state.user,
+//   };
+// };
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -19,13 +34,13 @@ axios.interceptors.request.use((config) => {
 })
 
 root.render(
-  <React.StrictMode>
+  <Provider store={store}>
+  
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
 
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-
-  </React.StrictMode>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

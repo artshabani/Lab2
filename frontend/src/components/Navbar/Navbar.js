@@ -1,12 +1,20 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link } from 'react-router-dom';
-import userData from '../auth/user';
-
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../../redux/actions';
 
 const Navbar = () => {
-  const {user} = userData();
-  console.log(user)
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+
+  const handleLogOut = () => {
+    localStorage.removeItem('token');
+    dispatch(setUser());
+    navigate("/");
+  }
+
   return (
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <Link to="/" className="nav-link"><a class="navbar-brand" href="#">Navbar</a></Link>
@@ -27,20 +35,29 @@ const Navbar = () => {
           <li class="nav-item">
             <Link to="/contactus" className="nav-link">Contact us</Link>
           </li>
-          <li class="nav-item">
-            <Link to="/login" className="nav-link">Login</Link>
-          </li>
-          <li class="nav-item">
-            <Link to="/signup" className="nav-link">Signup</Link>
-          </li>
+          {!state.user && (<>
+            <li class="nav-item">
+              <Link to="/login" className="nav-link">Login</Link>
+            </li>
+            <li class="nav-item">
+              <Link to="/signup" className="nav-link">Signup</Link>
+            </li>
+          </>)}
+          {state.user && (<>
+            <li class="nav-item">
+              <p>Hi: {state.user.name}</p>
+            </li>
 
-          <li class="nav-item">
-            <Link to="/logout" className="nav-link">Log Out</Link>
-          </li>
+            <li class="nav-item">
+              <button onClick={handleLogOut}>Log Out</button>
+            </li>
+          </>)
+          }
         </ul>
       </div>
     </nav>
   )
 }
+
 
 export default Navbar;

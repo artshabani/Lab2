@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+
 export class Login extends Component {
     constructor() {
         super();
@@ -14,6 +15,8 @@ export class Login extends Component {
     componentDidMount() {
         this.storeCollector()
     }
+
+
 
     storeCollector() {
         let store = JSON.parse(localStorage.getItem('login'));
@@ -41,8 +44,8 @@ export class Login extends Component {
         }).then((response) => {
             response.json().then((result) => {
                 console.warn("result", result);
-                localStorage.setItem('token', result.token)
-                this.storeCollector()
+                localStorage.setItem('token', result.token);
+                this.storeCollector();
             })
 
 
