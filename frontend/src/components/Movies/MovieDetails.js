@@ -14,7 +14,7 @@ function MovieDetails() {
   const history = createBrowserHistory();
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/movies/${id}`).then(response => {
+    axios.get(`http://localhost:5000/api/movies/${id}`).then((response) => {
       setMovie(response.data);
     });
   }, [id]);
@@ -26,7 +26,7 @@ function MovieDetails() {
         .then(() => {
           navigate(`/movies`); // navigate to movies page after successful deletion
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error);
         });
     }

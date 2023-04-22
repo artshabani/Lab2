@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import '../ComponentsCSS/PlayMovie.css';
 
 function MoviePlayer() {
   const { id } = useParams();
@@ -27,9 +28,11 @@ function MoviePlayer() {
   }
 
   return (
-    <div className="movie-player">
-      <h1>Now Playing: {movie.title}</h1>
-      {/* Add video player component here */}
+    <div className="video-container">
+      <h2>Now playing: {movie.title}</h2>
+      <video className="video-player" controls autoplay>
+        <source src="/Wednesday.mp4" type="video/mp4" />
+      </video>
     </div>
   );
 }
