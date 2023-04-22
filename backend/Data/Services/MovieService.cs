@@ -16,54 +16,61 @@ namespace backend.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<Movie>> GetAllMovies()
-        {
-            var movies = await _context.Movies.ToListAsync();
+  
 
-            return movies;
-        }
+public async Task<IEnumerable<Movie>> GetAllMovies()
+{
+    var movies = await _context.Movies.Include(m => m.Genre).ToListAsync();
 
-        public async Task<Movie> GetMovieById(int id)
-        {
-            var movie = await _context.Movies.FindAsync(id);
+    return movies;
+}
 
-            return movie;
-        }
+public async Task<Movie> GetMovieById(int id)
+{
+    var movie = await _context.Movies.Include(m => m.Genre).FirstOrDefaultAsync(m => m.Id == id);
 
-        public async Task<Movie> CreateMovie(Movie movie)
-        {
-            _context.Movies.Add(movie);
-            await _context.SaveChangesAsync();
+    return movie;
+}
 
-            return movie;
-        }
+public async Task<Movie> CreateMovie(Movie movie)
+{
+    _context.Movies.Add(movie);
+    await _context.SaveChangesAsync();
 
-        public async Task<bool> EditMovie(int id, Movie movie)
-        {
-            if (id != movie.Id)
-            {
-                return false;
-            }
+    // Include genre in the returned movie object
+    return await _context.Movies.Include(m => m.Genre).FirstOrDefaultAsync(m => m.Id == movie.Id);
+}
 
-            _context.Entry(movie).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+public async Task<bool> EditMovie(int id, Movie movie)
+{
+    if (id != movie.Id)
+    {
+        return false;
+    }
 
-            return true;
-        }
+    _context.Entry(movie).State = EntityState.Modified;
+    await _context.SaveChangesAsync();
 
-        public async Task<bool> DeleteMovie(int id)
-        {
-            var movie = await _context.Movies.FindAsync(id);
+    // Include genre in the updated movie object
+    var updatedMovie = await _context.Movies.Include(m => m.Genre).FirstOrDefaultAsync(m => m.Id == id);
 
-            if (movie == null)
-            {
-                return false;
-            }
+    return updatedMovie != null;
+}
 
-            _context.Movies.Remove(movie);
-            await _context.SaveChangesAsync();
+public async Task<bool> DeleteMovie(int id)
+{
+    var movie = await _context.Movies.FindAsync(id);
 
-            return true;
-        }
+    if (movie == null)
+    {
+        return false;
+    }
+
+    _context.Movies.Remove(movie);
+    await _context.SaveChangesAsync();
+
+    return true;
+}
+
     }
 }

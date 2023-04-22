@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { redirect, useParams } from "react-router-dom";
-import{ createBrowserHistory} from "history";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { redirect, useParams } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import { useNavigate } from 'react-router-dom';
 
 function EditMovie(props) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [genre, setGenre] = useState("");
-  const [duration, setDuration] = useState("");
-  const [image, setImage] = useState("");
-  const [video, setVideo] = useState("");
-  const [trailer, setTrailer] = useState("");
-  const [viewCount, setViewCount] = useState("");
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [genre, setGenre] = useState('');
+  const [duration, setDuration] = useState('');
+  const [image, setImage] = useState('');
+  const [video, setVideo] = useState('');
+  const [trailer, setTrailer] = useState('');
+  const [viewCount, setViewCount] = useState('');
   const { id } = useParams();
   const navigate = useNavigate();
   const history = createBrowserHistory();
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/movies/${id}`).then((response) => {
+    axios.get(`http://localhost:5000/api/movies/${id}`).then(response => {
       setTitle(response.data.title);
       setDescription(response.data.description);
       setGenre(response.data.genre);
@@ -30,10 +30,10 @@ function EditMovie(props) {
     });
   }, [id]);
 
-  const handleSubmit = async (event) => {
-   event.preventDefault();
+  const handleSubmit = async event => {
+    event.preventDefault();
     const updatedMovie = {
-        id: id,
+      id: id,
       title: title,
       description: description,
       genre: genre,
@@ -43,19 +43,16 @@ function EditMovie(props) {
       trailer: trailer,
       viewCount: viewCount,
     };
-      
-     try {
-        
-        await axios.put(`http://localhost:5000/api/movies`, updatedMovie).then((then) => console.log("Something"))
-        navigate('/movies');
-        
-     } catch (error) {
-        console.log(error);
-     }
-     
-      
-   
-       
+
+    try {
+      console.log(updatedMovie);
+      await axios
+        .put(`http://localhost:5000/api/movies`, updatedMovie)
+        .then(then => console.log('Something'));
+      navigate('/movies');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -69,7 +66,7 @@ function EditMovie(props) {
               <input
                 type="text"
                 value={title}
-                onChange={(event) => setTitle(event.target.value)}
+                onChange={event => setTitle(event.target.value)}
                 className="form-control"
                 required
               />
@@ -78,7 +75,7 @@ function EditMovie(props) {
               <label>Description:</label>
               <textarea
                 value={description}
-                onChange={(event) => setDescription(event.target.value)}
+                onChange={event => setDescription(event.target.value)}
                 className="form-control"
                 required
               ></textarea>
@@ -88,7 +85,7 @@ function EditMovie(props) {
               <input
                 type="text"
                 value={genre}
-                onChange={(event) => setGenre(event.target.value)}
+                onChange={event => setGenre(event.target.value)}
                 className="form-control"
                 required
               />
@@ -98,7 +95,7 @@ function EditMovie(props) {
               <input
                 type="text"
                 value={duration}
-                onChange={(event) => setDuration(event.target.value)}
+                onChange={event => setDuration(event.target.value)}
                 className="form-control"
                 required
               />
@@ -108,7 +105,7 @@ function EditMovie(props) {
               <input
                 type="text"
                 value={image}
-                onChange={(event) => setImage(event.target.value)}
+                onChange={event => setImage(event.target.value)}
                 className="form-control"
                 required
               />
@@ -118,7 +115,7 @@ function EditMovie(props) {
               <input
                 type="text"
                 value={video}
-                onChange={(event) => setVideo(event.target.value)}
+                onChange={event => setVideo(event.target.value)}
                 className="form-control"
                 required
               />
@@ -128,7 +125,7 @@ function EditMovie(props) {
               <input
                 type="text"
                 value={trailer}
-                onChange={(event) => setTrailer(event.target.value)}
+                onChange={event => setTrailer(event.target.value)}
                 className="form-control"
                 required
               />
@@ -138,21 +135,19 @@ function EditMovie(props) {
               <input
                 type="text"
                 value={viewCount}
-                onChange={(event) => setViewCount(event.target.value)}
+                onChange={event => setViewCount(event.target.value)}
                 className="form-control"
-                disabled
+                readOnly
               />
             </div>
             <button type="submit" className="btn btn-primary">
-          Save Changes
-        </button>
-      </form>
-    </div>
-
-    </div>
+              Save Changes
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
-
 
 export default EditMovie;

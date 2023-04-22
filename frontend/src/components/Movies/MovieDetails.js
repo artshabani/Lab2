@@ -1,29 +1,32 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useParams, Link} from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useParams, Link } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import { useNavigate } from 'react-router-dom';
-import MovieCard from "./MovieCard";
-import "../ComponentsCSS/MovieDetails.css";
+
+import MovieCard from './MovieCard';
+import '../ComponentsCSS/MovieDetails.css';
 
 function MovieDetails() {
   const [movie, setMovie] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
+  const history = createBrowserHistory();
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/movies/${id}`).then((response) => {
+    axios.get(`http://localhost:5000/api/movies/${id}`).then(response => {
       setMovie(response.data);
     });
   }, [id]);
 
   const handleDelete = () => {
-    if (window.confirm("Are you sure you want to delete this movie?")) {
+    if (window.confirm('Are you sure you want to delete this movie?')) {
       axios
         .delete(`http://localhost:5000/api/movies/${id}`)
         .then(() => {
-           navigate.push(`/movies`); // navigate to movies page after successful deletion
+          navigate(`/movies`); // navigate to movies page after successful deletion
         })
-        .catch((error) => {
+        .catch(error => {
           console.error(error);
         });
     }
