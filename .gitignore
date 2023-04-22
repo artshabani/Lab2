@@ -1,5 +1,5 @@
 *.dll
-appsettings.json
+/appsettings.json
 .vs/
 bin/
 obj/
@@ -10,3 +10,4 @@ backend/obj/Debug/net6.0/project.razor.json
 backend/obj/Debug/net6.0/backend.assets.cache
 backend/bin/Debug/net6.0/backend.dll
 backend/bin/Debug/net6.0/backend.pdb
+*.cache
