@@ -4,6 +4,7 @@ using backend.Models;
 using backend.Data;
 using backend.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using backend.Migrations;
 
 namespace backend.Services
 {
@@ -14,6 +15,20 @@ namespace backend.Services
         public UserService(AppDbContext context)
         {
             _context = context;
+        }
+
+         public void LogAction(string username, string action, string entity, DateTime timestamp)
+        {
+            var log = new Log
+            {
+                Username = username,
+                Entity = entity,
+                Action = action,
+                Timestamp = DateTime.Now
+            };
+
+            _context.Logs.Add(log);
+            _context.SaveChanges();
         }
 
         public async Task<IEnumerable<User>> GetAllUsers()

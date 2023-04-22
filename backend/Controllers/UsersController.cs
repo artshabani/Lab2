@@ -44,6 +44,7 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> CreateUser(User user)
         {
+            _userService.LogAction("Admin","Created",user.Name,DateTime.Now);
             var createdUser = await _userService.CreateUser(user);
 
             return CreatedAtAction(nameof(GetUserById), new { id = createdUser.Id }, createdUser);
@@ -53,6 +54,7 @@ namespace backend.Controllers
         [HttpPut]
         public async Task<IActionResult> EditUser(User user)
         {
+            _userService.LogAction("Admin","Updated",user.Name,DateTime.Now);
             var success = await _userService.EditUser(user.Id, user);
 
             if (!success)
@@ -67,6 +69,8 @@ namespace backend.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
+            var user = await _userService.GetUserById(id);
+            _userService.LogAction("Admin","Deleted",user.Name,DateTime.Now);
             var success = await _userService.DeleteUser(id);
 
             if (!success)

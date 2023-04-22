@@ -84,7 +84,7 @@ function EditMovie(props) {
               <label>Genre:</label>
               <input
                 type="text"
-                value={genre}
+                value={genre.name}
                 onChange={event => setGenre(event.target.value)}
                 className="form-control"
                 required

@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import { useNavigate } from 'react-router-dom';
 
 function EditUser(props) {
   const { id } = useParams();
   const [user, setUser] = useState({});
+  const navigate = useNavigate();
+  const history = createBrowserHistory();
 
   useEffect(() => {
     axios
@@ -14,7 +18,7 @@ function EditUser(props) {
         setUser(user);
       })
       .catch((error) => {
-        console.log("Error fetching user data: ", error);
+        console.log('Error fetching user data: ', error);
       });
   }, [id]);
 
@@ -22,7 +26,7 @@ function EditUser(props) {
     event.preventDefault();
 
     const updatedUser = {
-        id: id,
+      id: id,
       name: user.name,
       username: user.username,
       email: user.email,
@@ -30,13 +34,15 @@ function EditUser(props) {
     };
 
     // console.log("This is " + id, "This is updated user: " + updatedUser.name);
-    axios.put(`http://localhost:5000/api/users`, updatedUser)
+    axios
+      .put(`http://localhost:5000/api/users`, updatedUser)
       .then((response) => {
-        console.log("PUT request sent successfully: ", response.data);
+        console.log('PUT request sent successfully: ', response.data);
       })
       .catch((error) => {
-        console.log("Error sending PUT request: ", error);
+        console.log('Error sending PUT request: ', error);
       });
+    navigate('/users');
   };
 
   const handleChange = (event) => {

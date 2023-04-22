@@ -6,6 +6,7 @@ namespace backend.Services.Interfaces
 {
     public interface IMovieService
     {
+        void LogAction(string username, string action, string entity, DateTime timestamp);
         Task<IEnumerable<Movie>> GetAllMovies();
         Task<Movie> GetMovieById(int id);
         Task<Movie> CreateMovie(Movie movie);

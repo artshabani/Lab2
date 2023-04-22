@@ -6,6 +6,7 @@ namespace backend.Services.Interfaces
 {
     public interface IUserService
     {
+        void LogAction(string username, string action, string entity, DateTime timestamp);
         Task<IEnumerable<User>> GetAllUsers();
         Task<User> GetUserById(int id);
         Task<User> CreateUser(User user);
