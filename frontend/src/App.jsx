@@ -1,18 +1,26 @@
-import logo from './logo.svg';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import Pages from './components/Pages';
 import axios from 'axios';
-import userData from './components/auth/user';
 import { BarLoader } from 'react-spinner-animated';
+import { setUser } from './redux/actions/index'
+import { useDispatch } from 'react-redux';
 
 function App() {
-
-  const { user, getUser, loading } = userData();
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getUser()
-  })
+    const token = window.localStorage.getItem("token");
+    const getUser = async () => {
+      setLoading(true);
+      if (token) {
+        await axios.get("http://localhost:5000/api/account").then((res) => dispatch(setUser(res.data)));
+      }
+      setLoading(false);
+    }
+    getUser();
+  }, []);
 
   if (loading) {
     return <div className="center">
