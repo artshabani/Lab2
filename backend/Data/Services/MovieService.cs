@@ -4,6 +4,7 @@ using backend.Models;
 using backend.Data;
 using backend.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Services
 {
@@ -15,11 +16,11 @@ namespace backend.Services
         {
             _context = context;
         }
-public void LogAction(string username, string action, string entity, DateTime timestamp)
+public void LogAction(ControllerBase controller, string action, string entity, DateTime timestamp)
         {
             var log = new Log
             {
-                Username = username,
+                Username = controller.User.Identity.Name,
                 Entity = entity,
                 Action = action,
                 Timestamp = DateTime.Now

@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using backend.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Services.Interfaces
 {
     public interface IMovieService
     {
-        void LogAction(string username, string action, string entity, DateTime timestamp);
+        void LogAction(ControllerBase controller, string action, string entity, DateTime timestamp);
         Task<IEnumerable<Movie>> GetAllMovies();
         Task<Movie> GetMovieById(int id);
         Task<Movie> CreateMovie(Movie movie);
