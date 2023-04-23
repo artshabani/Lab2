@@ -19,13 +19,13 @@ function UserList() {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/account').then((response) => {
+    axios.get('http://localhost:5000/api/users').then(response => {
       setUsers(response.data);
       setIsLoading(false);
     });
   }, []);
 
-  const filteredUsers = users.filter((user) => {
+  const filteredUsers = users.filter(user => {
     const term = searchTerm.toLowerCase();
     const name = user.name.toLowerCase();
     const username = user.username.toLowerCase();
@@ -39,12 +39,12 @@ function UserList() {
     setCurrentPage(value);
   };
 
-  const handleSearch = (event) => {
+  const handleSearch = event => {
     setSearchTerm(event.target.value);
     setCurrentPage(1);
   };
 
-  const handlePerPageChange = (event) => {
+  const handlePerPageChange = event => {
     setUsersPerPage(parseInt(event.target.value));
     setCurrentPage(1);
   };
@@ -60,8 +60,8 @@ function UserList() {
       `Are you sure you want to delete the user: ${name}?`
     );
     if (confirmDelete) {
-      axios.delete(`http://localhost:5000/api/users/${id}`).then((response) => {
-        setUsers(users.filter((user) => user.id !== id));
+      axios.delete(`http://localhost:5000/api/users/${id}`).then(response => {
+        setUsers(users.filter(user => user.id !== id));
       });
     }
   }
@@ -131,7 +131,7 @@ function UserList() {
                 </tr>
               </thead>
               <tbody>
-                {currentUsers.map((user) => (
+                {currentUsers.map(user => (
                   <tr key={user.id}>
                     <td>{user.id}</td>
                     <td>{user.name}</td>
