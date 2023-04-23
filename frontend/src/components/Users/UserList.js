@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Pagination } from '@material-ui/lab';
 import '../ComponentsCSS/UserList.css';
-import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import { useNavigate } from 'react-router-dom';
 import {
   BarLoader,
   DoubleBubble,
@@ -17,9 +18,11 @@ function UserList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
+  const history = createBrowserHistory();
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/users').then(response => {
+    axios.get('http://localhost:5000/api/account/users').then(response => {
       setUsers(response.data);
       setIsLoading(false);
     });
@@ -60,8 +63,9 @@ function UserList() {
       `Are you sure you want to delete the user: ${name}?`
     );
     if (confirmDelete) {
-      axios.delete(`http://localhost:5000/api/users/${id}`).then(response => {
+      axios.delete(`http://localhost:5000/api/account/${id}`).then(response => {
         setUsers(users.filter(user => user.id !== id));
+        navigate('/users');
       });
     }
   }
