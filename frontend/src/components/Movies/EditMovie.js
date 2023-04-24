@@ -11,6 +11,7 @@ function EditMovie(props) {
   const [duration, setDuration] = useState('');
   const [image, setImage] = useState('');
   const [video, setVideo] = useState('');
+  const [genreid, setGenreId] = useState('');
   const [trailer, setTrailer] = useState('');
   const [viewCount, setViewCount] = useState('');
   const { id } = useParams();
@@ -20,6 +21,7 @@ function EditMovie(props) {
   useEffect(() => {
     axios.get(`http://localhost:5000/api/movies/${id}`).then(response => {
       setTitle(response.data.title);
+      setGenreId(response.data.genreId);
       setDescription(response.data.description);
       setGenre(response.data.genre);
       setDuration(response.data.duration);
@@ -27,6 +29,7 @@ function EditMovie(props) {
       setVideo(response.data.video);
       setTrailer(response.data.trailer);
       setViewCount(response.data.viewCount);
+      console.log(response.data);
     });
   }, [id]);
 
@@ -35,6 +38,7 @@ function EditMovie(props) {
     const updatedMovie = {
       id: id,
       title: title,
+      genreId: genreid,
       description: description,
       genre: genre,
       duration: duration,

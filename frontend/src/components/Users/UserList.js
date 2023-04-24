@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Pagination } from '@material-ui/lab';
 import '../ComponentsCSS/UserList.css';
-import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import { useNavigate } from 'react-router-dom';
 import {
   BarLoader,
   DoubleBubble,
@@ -17,15 +18,17 @@ function UserList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
+  const history = createBrowserHistory();
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/account').then((response) => {
+    axios.get('http://localhost:5000/api/account/users').then(response => {
       setUsers(response.data);
       setIsLoading(false);
     });
   }, []);
 
-  const filteredUsers = users.filter((user) => {
+  const filteredUsers = users.filter(user => {
     const term = searchTerm.toLowerCase();
     const name = user.name.toLowerCase();
     const username = user.username.toLowerCase();
@@ -39,12 +42,12 @@ function UserList() {
     setCurrentPage(value);
   };
 
-  const handleSearch = (event) => {
+  const handleSearch = event => {
     setSearchTerm(event.target.value);
     setCurrentPage(1);
   };
 
-  const handlePerPageChange = (event) => {
+  const handlePerPageChange = event => {
     setUsersPerPage(parseInt(event.target.value));
     setCurrentPage(1);
   };
@@ -60,8 +63,9 @@ function UserList() {
       `Are you sure you want to delete the user: ${name}?`
     );
     if (confirmDelete) {
-      axios.delete(`http://localhost:5000/api/users/${id}`).then((response) => {
-        setUsers(users.filter((user) => user.id !== id));
+      axios.delete(`http://localhost:5000/api/account/${id}`).then(response => {
+        setUsers(users.filter(user => user.id !== id));
+        navigate('/users');
       });
     }
   }
@@ -131,7 +135,7 @@ function UserList() {
                 </tr>
               </thead>
               <tbody>
-                {currentUsers.map((user) => (
+                {currentUsers.map(user => (
                   <tr key={user.id}>
                     <td>{user.id}</td>
                     <td>{user.name}</td>

@@ -12,17 +12,17 @@ function EditUser(props) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/users/${id}`)
-      .then((response) => {
+      .get(`http://localhost:5000/api/account/${id}`)
+      .then(response => {
         const user = response.data;
         setUser(user);
       })
-      .catch((error) => {
+      .catch(error => {
         console.log('Error fetching user data: ', error);
       });
   }, [id]);
 
-  const handleUpdateUser = (event) => {
+  const handleUpdateUser = event => {
     event.preventDefault();
 
     const updatedUser = {
@@ -32,20 +32,22 @@ function EditUser(props) {
       email: user.email,
       password: user.password,
     };
+    console.log(updatedUser);
 
     // console.log("This is " + id, "This is updated user: " + updatedUser.name);
     axios
-      .put(`http://localhost:5000/api/users`, updatedUser)
-      .then((response) => {
+      .put(`http://localhost:5000/api/account/${id}`, updatedUser)
+      .then(response => {
+        window.location.reload();
         console.log('PUT request sent successfully: ', response.data);
       })
-      .catch((error) => {
+      .catch(error => {
         console.log('Error sending PUT request: ', error);
       });
     navigate('/users');
   };
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     setUser({
       ...user,
       [event.target.name]: event.target.value,
@@ -84,9 +86,10 @@ function EditUser(props) {
             name="email"
             value={user.email}
             onChange={handleChange}
+            readOnly
           />
         </div>
-        <div>
+        {/* <div>
           <label htmlFor="password">Password:</label>
           <input
             type="password"
@@ -96,7 +99,7 @@ function EditUser(props) {
             onChange={handleChange}
             disabled
           />
-        </div>
+        </div> */}
         <button type="submit" value="submit">
           Save
         </button>
