@@ -12,6 +12,7 @@ namespace Data
 
                 await roleManager.CreateAsync(new IdentityRole(Roles.Admin.ToString()));
                 await roleManager.CreateAsync(new IdentityRole(Roles.User.ToString()));
+                await roleManager.CreateAsync(new IdentityRole(Roles.Suspended.ToString()));
 
                 var defaultUser = new AppUser
                 {
