@@ -1,13 +1,11 @@
-using System.Linq;
-using System.Threading.Tasks;
 using backend.Data;
+using backend.Models;
 using Microsoft.AspNetCore.Identity;
-
 namespace Data
 {
     public static class Seed
     {
-        public static async Task SeedAdminAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public static async Task SeedAdminAsync(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             if (!roleManager.Roles.Any())
             {
@@ -15,7 +13,7 @@ namespace Data
                 await roleManager.CreateAsync(new IdentityRole(Roles.Admin.ToString()));
                 await roleManager.CreateAsync(new IdentityRole(Roles.User.ToString()));
 
-                var defaultUser = new ApplicationUser
+                var defaultUser = new AppUser
                 {
                     UserName = "Admin123",
                     Email = "admin@gmail.com",

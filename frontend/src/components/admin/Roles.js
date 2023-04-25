@@ -6,7 +6,7 @@ function Roles() {
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <div class="float-right">
-                    <Link to="/createrole" className="nav-link"><a class="btn btn-primary" >Create new</a></Link>
+                    <Link to="/createrole" className="nav-link"><a class="btn btn-primary">Create new</a></Link>
                 </div>
                 <h6 class="m-0 font-weight-bold text-primary"></h6>
             </div>
