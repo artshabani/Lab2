@@ -43,7 +43,7 @@ const Pages = () => {
         <Route path="/logs" element={<Logs />} />
         <Route path="/roles" element={<Roles />} />
         <Route path="/createrole" element={<CreateRole />} />
-        <Route path="/edituserinrole" element={<EditUserInRole />} />
+        <Route path="/edituserinrole/:roleId" element={<EditUserInRole />} />
       </Routes>
     </>
   );

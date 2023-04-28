@@ -6,14 +6,14 @@ using Microsoft.EntityFrameworkCore;
 using backend.Data;
 namespace backend.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     [ApiController]
     [Route("api/[controller]")]
     public class AdminController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;
-        public AdminController(RoleManager<IdentityRole> roleManager,UserManager<ApplicationUser> userManager)
+        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
@@ -22,9 +22,10 @@ namespace backend.Controllers
         [HttpGet]
         public IActionResult CreateRole()
         {
-            return View();
+            //return View();
+            return Json(new { message = "This method is not used anymore" });
         }
-         
+
         [HttpPost("createrole")]
         public async Task<IActionResult> CreateRole(CreateRole role)
         {
@@ -38,44 +39,39 @@ namespace backend.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Roles", "Admin");
+                    return Json(new { success = true, message = "Role created successfully" });
+                    //return RedirectToAction("Roles", "Admin");
                 }
-                foreach(IdentityError e in result.Errors)
+                foreach (IdentityError e in result.Errors)
                 {
                     ModelState.AddModelError("", e.Description);
                 }
             }
-            
-            return View(role);
+            return Json(new { success = false, message = "Error creating role" });
+            //return View(role);
         }
 
-        [HttpGet]
+        [HttpGet("roles")]
         public IActionResult Roles()
         {
             var roles = roleManager.Roles;
-            return View(roles);
+            return Json(new { success = true, roles = roles });
+            //return View(roles);
         }
 
-        [HttpGet]
-        public IActionResult Users()
-        {
-            var user = userManager.Users;
-            return View(user);
-        }
-
-        [HttpGet]
+        [HttpGet("editusersinrole/{roleId}")]
         public async Task<IActionResult> EditUsersInRole(string roleId)
         {
             ViewBag.roleId = roleId;
 
             var role = await roleManager.FindByIdAsync(roleId);
 
-            if(role == null)
+            if (role == null)
             {
                 return NotFound();
             }
             var model = new List<UserRole>();
-            foreach(var user in await userManager.Users.ToListAsync())
+            foreach (var user in await userManager.Users.ToListAsync())
             {
                 var userRole = new UserRole
                 {
@@ -83,7 +79,7 @@ namespace backend.Controllers
                     UserName = user.UserName
                 };
 
-                if(await userManager.IsInRoleAsync(user, role.Name))
+                if (await userManager.IsInRoleAsync(user, role.Name))
                 {
                     userRole.isSelected = true;
                 }
@@ -95,10 +91,10 @@ namespace backend.Controllers
 
             }
 
-            return View(model);
+            return Ok(model);
         }
 
-        [HttpPost]
+        [HttpPost("editusersinrole/{roleId}")]
         public async Task<IActionResult> EditUsersInRole(List<UserRole> model, string roleId)
         {
             var role = await roleManager.FindByIdAsync(roleId);
@@ -127,16 +123,20 @@ namespace backend.Controllers
                 {
                     continue;
                 }
-                if (result.Succeeded)
+                if (!result.Succeeded)
                 {
-                    if (i < (model.Count - 1))
-                        continue;
-                    else
-                        return RedirectToAction("Roles");
+                    return BadRequest(result.Errors);
                 }
+                // if (result.Succeeded)
+                // {
+                //     if (i < (model.Count - 1))
+                //         continue;
+                //     else
+                //         return RedirectToAction("Roles");
+                // }
             }
-
-           return RedirectToAction("Roles");
+            return Ok();
+            //return RedirectToAction("Roles");
 
         }
 
@@ -155,15 +155,17 @@ namespace backend.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Roles");
+                    return Ok(new { message = "Role deleted successfully." });
+                    //return RedirectToAction("Roles");
                 }
+                return BadRequest(new { message = "Role deletion failed." });
 
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
+                // foreach (var error in result.Errors)
+                // {
+                //     ModelState.AddModelError("", error.Description);
+                // }
 
-                return RedirectToAction("Roles");
+                // return RedirectToAction("Roles");
             }
         }
     }
