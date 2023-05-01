@@ -55,7 +55,8 @@ namespace backend.Controllers
         public IActionResult Roles()
         {
             var roles = roleManager.Roles;
-            return Json(new { success = true, roles = roles });
+            return (IActionResult)roles;
+            //return Json(new { success = true, roles = roles });
             //return View(roles);
         }
 

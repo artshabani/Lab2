@@ -51,6 +51,11 @@ const Navbar = () => {
             <a href="#">Logs</a>
           </Link>
         </li>
+        <li>
+          <Link to="/dashboard">
+            <a href="#">Dashboard</a>
+          </Link>
+        </li>
         {!state.user && (
           <>
             <li>
