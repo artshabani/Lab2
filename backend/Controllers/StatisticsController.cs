@@ -6,10 +6,13 @@ using backend.Data;
 using backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Controllers
 {
     //[Authorize(Roles = "Admin")]
+    [ApiController]
+    [Route("api/[controller]")]
     public class StatisticsController : Controller
     {
         private readonly AppDbContext _context;
@@ -18,33 +21,32 @@ namespace backend.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             return Json(new
             {
-                data = Area()
+                data = await Area()
             });
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<int>> Area()
+        [HttpGet("area")]
+        public async Task<IEnumerable<int>> Area()
         {
             var viewCounts = new int[12];
 
             for (var i = 1; i <= 12; i++)
             {
-                viewCounts[i - 1] = _context.Movies.Where(p => p.ViewCount == i).Count();
+                viewCounts[i - 1] = await _context.Movies.Where(p => p.ViewCount == i).CountAsync();
             }
 
             return viewCounts;
         }
 
-
-        [HttpGet]
-        public ActionResult<IEnumerable<Movie>> Pie()
+        [HttpGet("pie")]
+        public async Task<IEnumerable<Movie>> Pie()
         {
             var mov =
-                _context.Movies.OrderByDescending(m => m.Duration).Take(3).ToArray();
+                await _context.Movies.OrderByDescending(m => m.Duration).Take(3).ToArrayAsync();
 
             return new[]
                 {
@@ -53,5 +55,32 @@ namespace backend.Controllers
                     mov[2]
                 };
         }
+
+        // [HttpGet("area")]
+        // public async Task<ActionResult<IEnumerable<int>>> Area()
+        // {
+        //     var viewCounts = await new int[12];
+
+        //     for (var i = 1; i <= 12; i++)
+        //     {
+        //         viewCounts[i - 1] = _context.Movies.Where(p => p.ViewCount == i).Count();
+        //     }
+        //     return viewCounts;
+        // }
+
+
+        // [HttpGet("pie")]
+        // public async Task<ActionResult<IEnumerable<Movie>>> Pie()
+        // {
+        //     var mov = await
+        //         _context.Movies.OrderByDescending(m => m.Duration).Take(3).ToArray();
+
+        //     return new[]
+        //         {
+        //             mov[0],
+        //             mov[1],
+        //             mov[2]
+        //         };
+        // }
     }
 }

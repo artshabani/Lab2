@@ -7,7 +7,7 @@ function EditUserInRole(props) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get(`/admin/edituserinrole/${roleId}`);
+      const result = await axios.get(`http://localhost:5000/api/admin/edituserinrole/${roleId}`);
       setUsers(result.data);
     };
     fetchData();
@@ -21,9 +21,9 @@ function EditUserInRole(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const result = await axios.post(`/admin/edituserinrole/${roleId}`, users);
+    const result = await axios.post(`http://localhost:5000/api/admin/edituserinrole/${roleId}`, users);
     if (result.data.success) {
-      props.history.push('/admin/roles');
+      props.history.push('http://localhost:5000/api/admin/roles');
     }
   };
 
@@ -42,8 +42,8 @@ function EditUserInRole(props) {
           <tbody>
             {users.map((user, index) => (
               <tr key={index}>
-                <td>{user.userId}</td>
-                <td>{user.userName}</td>
+                <td>{user.Id}</td>
+                <td>{user.Username}</td>
                 <td>
                   <input
                     type="checkbox"

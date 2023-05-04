@@ -4,21 +4,15 @@ import { Link } from 'react-router-dom';
 
 function Roles() {
     const [roles, setRoles] = useState([]);
+    const [roleId, setRoleId] = useState('');
 
     useEffect(() => {
         const fetchRoles = async () => {
-          const res = await axios.get('http://localhost:5000/api/admin/roles');
-          setRoles(res.data);
+            const res = await axios.get('http://localhost:5000/api/admin/roles');
+            setRoles(res.data);
         };
         fetchRoles();
-      }, []);
-
-    // useEffect(() => {
-    //     fetch('/api/admin/roles')
-    //         .then(response => response.json())
-    //         .then(data => setRoles(data.roles))
-    //         .catch(error => console.error(error));
-    // }, []);
+    }, []);
 
     return (
         <div className="card shadow mb-4">
@@ -37,7 +31,7 @@ function Roles() {
                             </div>
                         </form>
                     </div>
-                    <table className="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <table className="table table-bordered" id="dataTable" width="100%" cellSpacing="0">
                         <thead>
                             <tr>
                                 <th>Id</th>
@@ -51,12 +45,15 @@ function Roles() {
                                     <td>{role.id}</td>
                                     <td>{role.name}</td>
                                     <td>
-                                        <Link to={`/edituserinrole/${role.id}`} className="nav-link">
-                                            <i className="fas fa-edit"></i>
+                                        <button className='btn btn-primary'>
+                                        <Link to={`/edituserinrole/${roleId}`} className="nav-link">
+                                            Add or Remove Users
+                                        </Link></button>
+                                        <button className='btn btn-danger'>
+                                        <Link to={`/deleterole/${role.id}`} className="nav-link">
+                                            Delete
                                         </Link>
-                                        {/* <Link to={`/deleterole/${role.id}`} className="nav-link">
-                                            <i className="fas fa-trash"></i>
-                                        </Link> */}
+                                        </button>
                                     </td>
                                 </tr>
                             ))}

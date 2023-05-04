@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import Statistics from '../admin/Statistics';
 
 function Dashboard() {
 
@@ -27,7 +28,7 @@ function Dashboard() {
                                             Movies
                                         </div>
                                         <div className="h5 mb-0 font-weight-bold text-gray-800">
-                                            $40,000
+                                            40,000
                                         </div>
                                         <Link to="/movies" className="nav-link"><a className="btn btn-primary">Watch</a></Link>
                                     </div>
@@ -52,7 +53,7 @@ function Dashboard() {
                                             Statistics
                                         </div>
                                         <div className="h5 mb-0 font-weight-bold text-gray-800">
-                                            $215,000
+                                            215,000
                                         </div>
                                         <Link to="/statistics" className="nav-link"><a className="btn btn-success">View</a></Link>
                                     </div>
@@ -70,25 +71,6 @@ function Dashboard() {
                                             className="text-xs font-weight-bold text-info text-uppercase mb-1"
                                         >
                                             Roles
-                                        </div>
-                                        <div className="row no-gutters align-items-center">
-                                            <div className="col-auto">
-                                                <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                                                    50%
-                                                </div>
-                                            </div>
-                                            <div className="col">
-                                                <div className="progress progress-sm mr-2">
-                                                    <div
-                                                        className="progress-bar bg-info"
-                                                        role="progressbar"
-                                                        style={{width: '50%'}}
-                                                        aria-valuenow="50"
-                                                        aria-valuemin="0"
-                                                        aria-valuemax="100"
-                                                    ></div>
-                                                </div>
-                                            </div>
                                         </div>
                                         <Link to="/roles" className="nav-link"><a className="btn btn-secondary">View</a></Link>
                                     </div>
@@ -118,6 +100,7 @@ function Dashboard() {
                             </div>
                         </div>
                     </div>
+                    <Statistics/>
                 </div>
             </div>
         </>

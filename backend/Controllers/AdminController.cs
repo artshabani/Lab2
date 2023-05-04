@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using backend.Data;
+
 namespace backend.Controllers
 {
     //[Authorize(Roles = "Admin")]
@@ -12,8 +13,8 @@ namespace backend.Controllers
     public class AdminController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
-        private readonly UserManager<ApplicationUser> userManager;
-        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
+        private readonly UserManager<AppUser> userManager;
+        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<AppUser> userManager)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
@@ -52,15 +53,13 @@ namespace backend.Controllers
         }
 
         [HttpGet("roles")]
-        public IActionResult Roles()
+        public async Task<IActionResult> Roles()
         {
-            var roles = roleManager.Roles;
-            return (IActionResult)roles;
-            //return Json(new { success = true, roles = roles });
-            //return View(roles);
+            var roles = await roleManager.Roles.ToListAsync();
+            return Ok(roles);
         }
 
-        [HttpGet("editusersinrole/{roleId}")]
+        [HttpGet("edituserinrole/{roleId}")]
         public async Task<IActionResult> EditUsersInRole(string roleId)
         {
             ViewBag.roleId = roleId;
@@ -95,7 +94,7 @@ namespace backend.Controllers
             return Ok(model);
         }
 
-        [HttpPost("editusersinrole/{roleId}")]
+        [HttpPost("edituserinrole/{roleId}")]
         public async Task<IActionResult> EditUsersInRole(List<UserRole> model, string roleId)
         {
             var role = await roleManager.FindByIdAsync(roleId);
