@@ -17,15 +17,18 @@ function HomePage() {
 
   return (
     <div>
-      <h1>Welcome to our movie streaming platform</h1>
+      <br />
+      <h1>Unlimited movies, <br/>endless entertainment.</h1>
+      <br />
+      <br />
+      <h6>Experience the magic of cinema from the comfort of your home</h6>
       <br />
       <br />
       <br />
+      <Link to="/signup" className="nav-link"><button className="btn btn-success">Get Started</button></Link>
+      <Link to="/movies" className="nav-link"><button className="btn btn-primary">Try For Free</button></Link>
       <br />
       <h2>Top 3 Most Viewed Movies</h2>
-      <br />
-
-      <br />
       <ul>
         {topMovies.map(movie => (
           <li key={movie.id}>

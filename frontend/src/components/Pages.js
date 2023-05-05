@@ -18,6 +18,11 @@ import Dashboard from './Dashboard/Dashboard';
 import ContactUs from './ContactUs/ContactUs';
 import ThankYou from './ContactUs/ThankYou';
 
+import Roles from './admin/Roles';
+import CreateRole from './admin/CreateRole';
+import EditUserInRole from './admin/EditUserInRole';
+import Statistics from './admin/Statistics';
+
 const Pages = () => {
   return (
     <>
@@ -37,6 +42,10 @@ const Pages = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logs" element={<Logs />} />
+        <Route path="/roles" element={<Roles />} />
+        <Route path="/createrole" element={<CreateRole />} />
+        <Route path="/edituserinrole/:roleId" element={<EditUserInRole />} />
+        <Route path="/statistics" element={<Statistics />} />
       </Routes>
     </>
   );
