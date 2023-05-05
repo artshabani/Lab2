@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\artsh\\Desktop\\Lab2\\backend\\backend.csproj": {}
+    "C:\\Users\\Acer\\Desktop\\Lab2\\Lab2\\backend\\backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\artsh\\Desktop\\Lab2\\backend\\backend.csproj": {
+    "C:\\Users\\Acer\\Desktop\\Lab2\\Lab2\\backend\\backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\artsh\\Desktop\\Lab2\\backend\\backend.csproj",
+        "projectUniqueName": "C:\\Users\\Acer\\Desktop\\Lab2\\Lab2\\backend\\backend.csproj",
         "projectName": "backend",
-        "projectPath": "C:\\Users\\artsh\\Desktop\\Lab2\\backend\\backend.csproj",
-        "packagesPath": "C:\\Users\\artsh\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\artsh\\Desktop\\Lab2\\backend\\obj\\",
+        "projectPath": "C:\\Users\\Acer\\Desktop\\Lab2\\Lab2\\backend\\backend.csproj",
+        "packagesPath": "C:\\Users\\Acer\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Acer\\Desktop\\Lab2\\Lab2\\backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\artsh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Acer\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -108,7 +108,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
