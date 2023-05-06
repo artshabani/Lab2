@@ -22,7 +22,6 @@ import Roles from './admin/Roles';
 import CreateRole from './admin/CreateRole';
 import EditUserInRole from './admin/EditUserInRole';
 import Statistics from './admin/Statistics';
-import Downloaded from './Movies/Download/Downloaded';
 
 const Pages = () => {
   return (
@@ -47,7 +46,6 @@ const Pages = () => {
         <Route path="/createrole" element={<CreateRole />} />
         <Route path="/edituserinrole/:roleId" element={<EditUserInRole />} />
         <Route path="/statistics" element={<Statistics />} />
-        <Route path="/downloaded" element={<Downloaded />} />
       </Routes>
     </>
   );
