@@ -2360,26 +2360,11 @@
     ]
   },
   "packageFolders": {
-<<<<<<< HEAD
-    "C:\\Users\\Acer\\.nuget\\packages\\": {}
-=======
     "/Users/idea/.nuget/packages/": {}
->>>>>>> 693b657968a8445f611cf3c5b173d4075841196f
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
-      "projectUniqueName": "C:\\Users\\Acer\\Desktop\\Lab2\\Lab2\\backend\\backend.csproj",
-      "projectName": "backend",
-      "projectPath": "C:\\Users\\Acer\\Desktop\\Lab2\\Lab2\\backend\\backend.csproj",
-      "packagesPath": "C:\\Users\\Acer\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Acer\\Desktop\\Lab2\\Lab2\\backend\\obj\\",
-      "projectStyle": "PackageReference",
-      "configFilePaths": [
-        "C:\\Users\\Acer\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-=======
       "projectUniqueName": "/Users/idea/Desktop/lab2/Lab2/backend/backend.csproj",
       "projectName": "backend",
       "projectPath": "/Users/idea/Desktop/lab2/Lab2/backend/backend.csproj",
@@ -2388,7 +2373,6 @@
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/idea/.nuget/NuGet/NuGet.Config"
->>>>>>> 693b657968a8445f611cf3c5b173d4075841196f
       ],
       "originalTargetFrameworks": [
         "net6.0"
@@ -2479,15 +2463,17 @@
             "privateAssets": "all"
           }
         },
-<<<<<<< HEAD
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
-=======
         "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.302/RuntimeIdentifierGraph.json"
->>>>>>> 693b657968a8445f611cf3c5b173d4075841196f
       }
     }
   },
   "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file /Users/idea/Desktop/lab2/Lab2/backend/obj/project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    },
     {
       "code": "NU1603",
       "level": "Warning",
