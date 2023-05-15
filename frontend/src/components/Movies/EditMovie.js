@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { redirect, useParams } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
+import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 function EditMovie(props) {
@@ -16,7 +15,6 @@ function EditMovie(props) {
   const [viewCount, setViewCount] = useState('');
   const { id } = useParams();
   const navigate = useNavigate();
-  const history = createBrowserHistory();
 
   useEffect(() => {
     axios.get(`http://localhost:5000/api/movies/${id}`).then(response => {

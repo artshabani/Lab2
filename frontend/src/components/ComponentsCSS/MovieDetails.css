@@ -1,6 +1,7 @@
 .movie-card {
   margin: 0 auto;
   max-width: 800px;
+  height: 430;
 }
 
 .movie-card button {

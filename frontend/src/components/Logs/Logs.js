@@ -2,13 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Pagination } from '@material-ui/lab';
 import '../ComponentsCSS/LogsList.css';
-import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
-import {
-  BarLoader,
-  DoubleBubble,
-  SlidingPebbles,
-} from 'react-spinner-animated';
+
+import { BarLoader } from 'react-spinner-animated';
 import 'react-spinner-animated/dist/index.css';
 
 function LogList() {
@@ -19,13 +14,13 @@ function LogList() {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/logs').then((response) => {
+    axios.get('http://localhost:5000/api/logs').then(response => {
       setLogs(response.data);
       setIsLoading(false);
     });
   }, []);
 
-  const filteredLogs = logs.filter((log) => {
+  const filteredLogs = logs.filter(log => {
     const term = searchTerm.toLowerCase();
     const username = log.username.toLowerCase();
     const entity = log.action.toLowerCase();
@@ -40,12 +35,12 @@ function LogList() {
     setCurrentPage(value);
   };
 
-  const handleSearch = (event) => {
+  const handleSearch = event => {
     setSearchTerm(event.target.value);
     setCurrentPage(1);
   };
 
-  const handlePerPageChange = (event) => {
+  const handlePerPageChange = event => {
     setLogsPerPage(parseInt(event.target.value));
     setCurrentPage(1);
   };
@@ -54,7 +49,7 @@ function LogList() {
   const indexOfFirstLog = indexOfLastLog - logsPerPage;
   const currentLogs = filteredLogs.slice(indexOfFirstLog, indexOfLastLog);
 
-  const getClassForAction = (action) => {
+  const getClassForAction = action => {
     switch (action) {
       case 'Created':
         return 'created';
@@ -131,7 +126,7 @@ function LogList() {
                 </tr>
               </thead>
               <tbody>
-                {currentLogs.map((log) => (
+                {currentLogs.map(log => (
                   <tr key={log.id} className={getClassForAction(log.action)}>
                     <td>{log.username}</td>
                     <td>{log.action}</td>

@@ -11,10 +11,9 @@ function MovieDetails() {
   const [movie, setMovie] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
-  const history = createBrowserHistory();
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/movies/${id}`).then((response) => {
+    axios.get(`http://localhost:5000/api/movies/${id}`).then(response => {
       setMovie(response.data);
     });
   }, [id]);
@@ -26,7 +25,7 @@ function MovieDetails() {
         .then(() => {
           navigate(`/movies`); // navigate to movies page after successful deletion
         })
-        .catch((error) => {
+        .catch(error => {
           console.error(error);
         });
     }
@@ -43,16 +42,16 @@ function MovieDetails() {
           <div className="movie-card-wrapper">
             <div className="movie-card">
               <MovieCard movie={movie} />
-              <Link to={`/PlayMovie/${movie.id}`}>
-                <button className="btn btn-primary">Play Movie</button>
-              </Link>
-              <button className="btn btn-danger" onClick={handleDelete}>
-                Delete Movie
-              </button>
-              <Link to={`/EditMovie/${movie.id}`}>
-                <button className="btn btn-warning">Edit Movie</button>
-              </Link>
             </div>
+            <Link to={`/PlayMovie/${movie.id}`}>
+              <button className="btn btn-primary">Play Movie</button>
+            </Link>
+            <Link to={`/EditMovie/${movie.id}`}>
+              <button className="btn btn-warning">Edit Movie</button>
+            </Link>
+            <button className="btn btn-danger" onClick={handleDelete}>
+              Delete Movie
+            </button>
           </div>
         </div>
       </div>

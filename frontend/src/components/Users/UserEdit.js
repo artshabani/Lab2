@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
 import { useNavigate } from 'react-router-dom';
 
 function EditUser(props) {
   const { id } = useParams();
   const [user, setUser] = useState({});
   const navigate = useNavigate();
-  const history = createBrowserHistory();
 
   useEffect(() => {
     axios

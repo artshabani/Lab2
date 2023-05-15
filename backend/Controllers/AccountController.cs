@@ -40,6 +40,8 @@ namespace backend.Controllers
             return Ok(userDtos);
         }
 
+
+
         [HttpPut("{id}")]
 
         public async Task<IActionResult> Edit(string id, EditUserDto editUserDto)
@@ -56,18 +58,18 @@ namespace backend.Controllers
             user.Email = editUserDto.Email;
 
             var result = await _userManager.UpdateAsync(user);
-            _userService.LogAction(this,"Updated",user.Name,DateTime.Now);
+            _userService.LogAction(this, "Updated", user.Name, DateTime.Now);
 
             if (result.Succeeded)
             {
                 return Ok(createUserObject(user));
-                
+
             }
             else
             {
                 return BadRequest(result.Errors);
             }
-            
+
         }
 
         [HttpGet("{id}")]
@@ -100,7 +102,7 @@ namespace backend.Controllers
                 return Unauthorized("Unauthorized no user found");
             }
         }
-        
+
 
         [HttpPost("register")]
         public async Task<ActionResult<AppUserDto>> CreateUser(RegisterDto registerDto)
@@ -113,7 +115,7 @@ namespace backend.Controllers
             };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
-            _userService.LogAction(this,"Created",user.Name,DateTime.Now);
+            _userService.LogAction(this, "Created", user.Name, DateTime.Now);
 
             if (result.Succeeded)
             {
@@ -137,7 +139,7 @@ namespace backend.Controllers
             }
 
             var result = await _userManager.DeleteAsync(user);
-            _userService.LogAction(this,"Deleted",user.Name,DateTime.Now);
+            _userService.LogAction(this, "Deleted", user.Name, DateTime.Now);
 
             if (result.Succeeded)
             {

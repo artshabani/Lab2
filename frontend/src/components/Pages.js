@@ -1,6 +1,6 @@
 import React from 'react';
 import Signup from './auth/Signup/Signup';
-import { Routes, Route, BrowserRouter, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Navbar from './Navbar/Navbar';
 import Login from './auth/Login/Login';
 import MovieList from './Movies/MovieList';
@@ -14,9 +14,9 @@ import Logs from './Logs/Logs';
 import UserDetails from './Users/UserDetails';
 import UserEdit from './Users/UserEdit';
 
-import Dashboard from './Dashboard/Dashboard';
-import ContactUs from './ContactUs/ContactUs';
-import ThankYou from './ContactUs/ThankYou';
+// import Dashboard from './Dashboard/Dashboard';
+// import ContactUs from './ContactUs/ContactUs';
+// import ThankYou from './ContactUs/ThankYou';
 
 const Pages = () => {
   return (
@@ -31,9 +31,9 @@ const Pages = () => {
         <Route path="/UserDetails/:id" element={<UserDetails />} />
         <Route path="/EditUser/:id" element={<UserEdit />} />
         <Route path="/EditMovie/:id" element={<EditMovie />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        {/* <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/contactus" element={<ContactUs />} />
-        <Route path="/thankyou" element={<ThankYou />} />
+        <Route path="/thankyou" element={<ThankYou />} /> */}
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logs" element={<Logs />} />

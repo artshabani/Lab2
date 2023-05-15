@@ -48,7 +48,7 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Movie>> CreateMovie(Movie movie)
         {
-            _movieService.LogAction(this,"Created",movie.Title,DateTime.Now);
+            _movieService.LogAction(this, "Created", movie.Title, DateTime.Now);
             var createdMovie = await _movieService.CreateMovie(movie);
 
             return CreatedAtAction(nameof(GetMovieById), new { id = createdMovie.Id }, createdMovie);
@@ -58,8 +58,8 @@ namespace backend.Controllers
         [HttpPut]
         public async Task<IActionResult> EditMovie(Movie movie)
         {
-            
-            _movieService.LogAction(this,"Updated",movie.Title,DateTime.Now);
+
+            _movieService.LogAction(this, "Updated", movie.Title, DateTime.Now);
             var result = await _movieService.EditMovie(movie.Id, movie);
 
             if (!result)
@@ -75,7 +75,7 @@ namespace backend.Controllers
         public async Task<IActionResult> DeleteMovie(int id)
         {
             var movie = await _movieService.GetMovieById(id);
-            _movieService.LogAction(this,"Deleted",movie.Title,DateTime.Now);
+            _movieService.LogAction(this, "Deleted", movie.Title, DateTime.Now);
             var result = await _movieService.DeleteMovie(id);
 
             if (!result)

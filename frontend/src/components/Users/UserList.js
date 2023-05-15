@@ -2,14 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Pagination } from '@material-ui/lab';
 import '../ComponentsCSS/UserList.css';
-import { Link, Navigate } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import {
-  BarLoader,
-  DoubleBubble,
-  SlidingPebbles,
-} from 'react-spinner-animated';
+import { BarLoader } from 'react-spinner-animated';
 import 'react-spinner-animated/dist/index.css';
 
 function UserList() {
@@ -19,7 +14,6 @@ function UserList() {
   const [usersPerPage, setUsersPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
-  const history = createBrowserHistory();
 
   useEffect(() => {
     axios.get('http://localhost:5000/api/account/users').then(response => {
@@ -55,8 +49,6 @@ function UserList() {
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
-
-  function handleDetailsClick(id) {}
 
   function handleDeleteClick(id, name) {
     const confirmDelete = window.confirm(
@@ -143,20 +135,19 @@ function UserList() {
                     <td>{user.email}</td>
                     <td>
                       <Link to={`/users/${user.id}`}>
-                        <a href="#" className="details">
+                        <a className="details">
                           <i className="material-icons">&#xE253;</i>
                         </a>
                       </Link>
 
                       <Link to={`/EditUser/${user.id}`}>
-                        <a href="#" className="edit">
+                        <a className="edit">
                           <i className="material-icons">&#xE872;</i>
                         </a>
                       </Link>
 
                       <Link to={`/users/${user.id}`}>
                         <a
-                          href="#"
                           className="delete"
                           onClick={() => handleDeleteClick(user.id, user.name)}
                         >

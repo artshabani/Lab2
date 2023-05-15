@@ -10,32 +10,10 @@
   height: 500px;
   /* background: white; */
 }
-.frem::before {
-  content: '';
-  position: absolute;
-  top: -4px;
-  left: -4px;
-  right: -4px;
-  bottom: -4px;
-  transform: skewX(2deg) skewY(4deg);
-  background: linear-gradient(315deg, #00ccff, #0e1538, #d400d4);
-}
-
-.frem::after {
-  content: '';
-  position: absolute;
-  top: -4px;
-  left: -4px;
-  right: -4px;
-  bottom: -4px;
-  transform: skewX(2deg) skewY(4deg);
-  background: linear-gradient(315deg, #00ccff, #0e1538, #d400d4);
-  filter: blur(50px);
-}
 
 .center-cant {
   width: 300px;
-  height: 500px;
+  height: 450px;
   background: #0e1538;
   position: absolute;
   top: 0px;
