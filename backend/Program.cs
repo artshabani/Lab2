@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using backend.Models;
 using System.IdentityModel.Tokens.Jwt;
+using Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -86,6 +87,11 @@ var services = scope.ServiceProvider;
 try
 {
     var context = services.GetRequiredService<AppDbContext>();
+    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+    await Seed.SeedAdminAsync(userManager, roleManager);
+
     DbSeed.Seed(context);
     Console.WriteLine("-------->Data seeded successfully.");
 }

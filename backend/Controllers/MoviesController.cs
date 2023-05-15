@@ -6,6 +6,8 @@ using backend.Services.Interfaces;
 using Microsoft.AspNetCore.Cors;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using backend.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Controllers
 {
@@ -15,10 +17,12 @@ namespace backend.Controllers
     public class MoviesController : ControllerBase
     {
         private readonly IMovieService _movieService;
+        private readonly AppDbContext _context;
 
-        public MoviesController(IMovieService movieService)
+        public MoviesController(IMovieService movieService, AppDbContext context)
         {
             _movieService = movieService;
+            _context = context;
         }
 
         // GET: api/movies
@@ -29,6 +33,28 @@ namespace backend.Controllers
             return await _movieService.GetAllMovies();
         }
 
+        //duhet me bo ni method qe gets genres of movies
+        //but idk qysh u bo qajo services te movieservice.cs
+        
+        // [HttpGet("{id}/genre")]
+        // public async Task<ActionResult<Genre>> GetMovieGenre(int id)
+        // {
+        //     var movie = await _movieService.GetMovieById(id);
+
+        //     if (movie == null)
+        //     {
+        //         return NotFound();
+        //     }
+
+        //     var genre = await _context.Genres.FindAsync(movie.GenreId);
+
+        //     if (genre == null)
+        //     {
+        //         return NotFound();
+        //     }
+
+        //     return genre;
+        // }
 
         // GET: api/movies/5
         [HttpGet("{id}")]

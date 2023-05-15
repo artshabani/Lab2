@@ -30,15 +30,17 @@ namespace backend.Controllers
             _userService = userService;
         }
 
-        [HttpGet("users")]
-        public async Task<ActionResult<List<AppUserDto>>> GetAllUsers()
-        {
-            var users = await _userManager.Users.ToListAsync();
+        //duhesh me bo ni foreach per mi barazu userat me role
+        //se sdi qa ke bA
+        // [HttpGet("users")]
+        // public async Task<ActionResult<List<AppUserDto>>> GetAllUsers()
+        // {
+        //     var users = await _userManager.Users.ToListAsync();
 
-            var userDtos = users.Select(user => createUserObject(user)).ToList();
+        //     var userDtos = users.Select(user => createUserObject(user)).ToList();
 
-            return Ok(userDtos);
-        }
+        //     return Ok(userDtos);
+        // }
 
 
 
@@ -60,9 +62,11 @@ namespace backend.Controllers
             var result = await _userManager.UpdateAsync(user);
             _userService.LogAction(this, "Updated", user.Name, DateTime.Now);
 
+            var role = await GetUserRole(user);
+
             if (result.Succeeded)
             {
-                return Ok(createUserObject(user));
+                return Ok(createUserObject(user, role));
 
             }
             else
@@ -82,7 +86,9 @@ namespace backend.Controllers
                 return NotFound();
             }
 
-            return createUserObject(user);
+            var role = await GetUserRole(user);
+
+            return createUserObject(user, role);
         }
 
 
@@ -95,7 +101,8 @@ namespace backend.Controllers
             var user = await _userManager.FindByEmailAsync(email);
             if (user != null)
             {
-                return createUserObject(user);
+                var role = await GetUserRole(user);
+                return createUserObject(user, role);
             }
             else
             {
@@ -117,9 +124,13 @@ namespace backend.Controllers
             var result = await _userManager.CreateAsync(user, registerDto.Password);
             _userService.LogAction(this, "Created", user.Name, DateTime.Now);
 
+            await _userManager.AddToRoleAsync(user, Roles.User.ToString());
+
+            var role = await GetUserRole(user);
+
             if (result.Succeeded)
             {
-                return createUserObject(user);
+                return createUserObject(user, role);
             }
             else
             {
@@ -161,11 +172,13 @@ namespace backend.Controllers
                 return Unauthorized();
             }
 
+            var roles = await GetUserRole(user);
+
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
 
             if (result.Succeeded)
             {
-                return createUserObject(user);
+                return createUserObject(user, roles);
             }
             else
             {
@@ -173,7 +186,7 @@ namespace backend.Controllers
             }
         }
 
-        private string GenerateJwtToken(AppUser user)
+        private string GenerateJwtToken(AppUser user, List<string> roles)
         {
             var claims = new List<Claim> {
                 new Claim(ClaimTypes.NameIdentifier,user.Id),
@@ -181,6 +194,11 @@ namespace backend.Controllers
                 new Claim(ClaimTypes.Name,user.UserName),
                 new Claim(ClaimTypes.Email,user.Email),
             };
+
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt"]));
 
@@ -200,7 +218,12 @@ namespace backend.Controllers
             return tokenHandler.WriteToken(token);
         }
 
-        private AppUserDto createUserObject(AppUser user)
+        private async Task<List<string>> GetUserRole(AppUser user)
+        {
+            return new List<string>(await _userManager.GetRolesAsync(user));
+        }
+
+        private AppUserDto createUserObject(AppUser user, List<string> roles)
         {
             return new AppUserDto
             {
@@ -208,7 +231,8 @@ namespace backend.Controllers
                 Name = user.Name,
                 Username = user.UserName,
                 Email = user.Email,
-                Token = GenerateJwtToken(user)
+                Token = GenerateJwtToken(user, roles),
+                UserRoles = roles,
             };
         }
     }

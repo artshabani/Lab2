@@ -16,7 +16,7 @@ namespace backend.Services
         {
             _context = context;
         }
-public void LogAction(ControllerBase controller, string action, string entity, DateTime timestamp)
+        public void LogAction(ControllerBase controller, string action, string entity, DateTime timestamp)
         {
             var log = new Log
             {
@@ -30,63 +30,58 @@ public void LogAction(ControllerBase controller, string action, string entity, D
             _context.SaveChanges();
         }
 
-        
+        public async Task<IEnumerable<Movie>> GetAllMovies()
+        {
+            var movies = await _context.Movies.Include(m => m.Genre).ToListAsync();
 
-  
+            return movies;
+        }
 
-public async Task<IEnumerable<Movie>> GetAllMovies()
-{
-    var movies = await _context.Movies.Include(m => m.Genre).ToListAsync();
+        public async Task<Movie> GetMovieById(int id)
+        {
+            var movie = await _context.Movies.Include(m => m.Genre).FirstOrDefaultAsync(m => m.Id == id);
 
-    return movies;
-}
+            return movie;
+        }
 
-public async Task<Movie> GetMovieById(int id)
-{
-    var movie = await _context.Movies.Include(m => m.Genre).FirstOrDefaultAsync(m => m.Id == id);
+        public async Task<Movie> CreateMovie(Movie movie)
+        {
+            _context.Movies.Add(movie);
+            await _context.SaveChangesAsync();
 
-    return movie;
-}
+            // Include genre in the returned movie object
+            return await _context.Movies.Include(m => m.Genre).FirstOrDefaultAsync(m => m.Id == movie.Id);
+        }
 
-public async Task<Movie> CreateMovie(Movie movie)
-{
-    _context.Movies.Add(movie);
-    await _context.SaveChangesAsync();
+        public async Task<bool> EditMovie(int id, Movie movie)
+        {
+            if (id != movie.Id)
+            {
+                return false;
+            }
 
-    // Include genre in the returned movie object
-    return await _context.Movies.Include(m => m.Genre).FirstOrDefaultAsync(m => m.Id == movie.Id);
-}
+            _context.Entry(movie).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
 
-public async Task<bool> EditMovie(int id, Movie movie)
-{
-    if (id != movie.Id)
-    {
-        return false;
-    }
+            // Include genre in the updated movie object
+            var updatedMovie = await _context.Movies.Include(m => m.Genre).FirstOrDefaultAsync(m => m.Id == id);
 
-    _context.Entry(movie).State = EntityState.Modified;
-    await _context.SaveChangesAsync();
+            return updatedMovie != null;
+        }
 
-    // Include genre in the updated movie object
-    var updatedMovie = await _context.Movies.Include(m => m.Genre).FirstOrDefaultAsync(m => m.Id == id);
+        public async Task<bool> DeleteMovie(int id)
+        {
+            var movie = await _context.Movies.FindAsync(id);
 
-    return updatedMovie != null;
-}
+            if (movie == null)
+            {
+                return false;
+            }
 
-public async Task<bool> DeleteMovie(int id)
-{
-    var movie = await _context.Movies.FindAsync(id);
+            _context.Movies.Remove(movie);
+            await _context.SaveChangesAsync();
 
-    if (movie == null)
-    {
-        return false;
-    }
-
-    _context.Movies.Remove(movie);
-    await _context.SaveChangesAsync();
-
-    return true;
-}
-
+            return true;
+        }
     }
 }

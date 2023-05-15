@@ -90,6 +90,38 @@ namespace backend.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("backend.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("RoomId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("UserAvatar")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Comment");
+                });
+
             modelBuilder.Entity("backend.Models.Genre", b =>
                 {
                     b.Property<int>("Id")
@@ -179,6 +211,45 @@ namespace backend.Migrations
                     b.ToTable("Movies");
                 });
 
+            modelBuilder.Entity("backend.Models.Room", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("AdminAvatar")
+                        .HasColumnType("int");
+
+                    b.Property<string>("AdminUsername")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MoviePoster")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Public")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("RoomAdmin")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StartMode")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Rooms");
+                });
+
             modelBuilder.Entity("backend.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -208,29 +279,23 @@ namespace backend.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("backend.Models.ViewHistory", b =>
+            modelBuilder.Entity("backend.Models.UserEmails", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("AppUserId")
-                        .IsRequired()
+                    b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("RoomId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("ViewedOn")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("UserEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
+                    b.HasIndex("RoomId");
 
-                    b.ToTable("ViewHistories");
+                    b.ToTable("UserEmails");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -366,6 +431,13 @@ namespace backend.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("backend.Models.Comment", b =>
+                {
+                    b.HasOne("backend.Models.Room", null)
+                        .WithMany("Comments")
+                        .HasForeignKey("RoomId");
+                });
+
             modelBuilder.Entity("backend.Models.Movie", b =>
                 {
                     b.HasOne("backend.Models.Genre", "Genre")
@@ -377,15 +449,11 @@ namespace backend.Migrations
                     b.Navigation("Genre");
                 });
 
-            modelBuilder.Entity("backend.Models.ViewHistory", b =>
+            modelBuilder.Entity("backend.Models.UserEmails", b =>
                 {
-                    b.HasOne("backend.Models.AppUser", "AppUser")
-                        .WithMany("ViewHistories")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
+                    b.HasOne("backend.Models.Room", null)
+                        .WithMany("UserEmails")
+                        .HasForeignKey("RoomId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -439,9 +507,11 @@ namespace backend.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("backend.Models.AppUser", b =>
+            modelBuilder.Entity("backend.Models.Room", b =>
                 {
-                    b.Navigation("ViewHistories");
+                    b.Navigation("Comments");
+
+                    b.Navigation("UserEmails");
                 });
 #pragma warning restore 612, 618
         }

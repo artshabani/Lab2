@@ -25,5 +25,9 @@ namespace backend.Data
         public DbSet<ViewHistory> ViewHistories { get; set; }
 
 
+        public DbSet<Room> Rooms { get; set; }
+
+        public DbSet<UserEmails> UserEmails { get; set; }
+
     }
 }
