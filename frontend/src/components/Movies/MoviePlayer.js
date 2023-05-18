@@ -8,18 +8,19 @@ function MoviePlayer() {
   const [movie, setMovie] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/movies/${id}`).then((response) => {
+    axios.get(`http://localhost:5000/api/movies/${id}`).then(response => {
       setMovie(response.data);
-      updateViewCount(response.data); // Call the function to update view count
+      updateViewCount(response.data); // Pass the movie ID to the function
     });
   }, [id]);
 
   // Function to update view count for a specific movie
-  const updateViewCount = (movie) => {
+  const updateViewCount = movie => {
     const updatedMovie = {
       ...movie,
       viewCount: movie.viewCount + 1,
     };
+    console.log(updatedMovie);
     axios.put(`http://localhost:5000/api/movies`, updatedMovie);
   };
 
