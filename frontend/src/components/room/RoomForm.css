@@ -1,0 +1,45 @@
+.create-room-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.create-room-box {
+    background-color: #1c1c1c;
+    color: #ffffff;
+    padding: 90px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin: 0 auto;
+    width: 800px;
+}
+
+.create-room-box h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+}
+
+input[type='checkbox'] {
+    margin-right: 5px;
+}
+
+button {
+    background-color: #ff4081;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ff79b0;
+}

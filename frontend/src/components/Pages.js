@@ -23,6 +23,7 @@ import CreateRole from './admin/CreateRole';
 import EditUserInRole from './admin/EditUserInRole';
 import Statistics from './admin/Statistics';
 import Subscription from './Subscription/Subscription';
+import CreateRoom from './room/CreateRoom'
 
 const Pages = () => {
   return (
@@ -48,6 +49,7 @@ const Pages = () => {
         <Route path="/edituserinrole/:roleId" element={<EditUserInRole />} />
         <Route path="/statistics" element={<Statistics />} />
         <Route path="/subscription" element={<Subscription />} />
+        <Route path="/createroom" element={<CreateRoom />} />
       </Routes>
     </>
   );
