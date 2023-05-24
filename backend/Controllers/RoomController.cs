@@ -40,9 +40,9 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateRoom(Room room)
         {
-            var roomExists = await _context.Rooms.FirstOrDefaultAsync(a => a.RoomAdmin == room.RoomAdmin);
+            // var roomExists = await _context.Rooms.FirstOrDefaultAsync(a => a.RoomAdmin == room.RoomAdmin);
 
-            if (roomExists != null) return BadRequest("You already have an active room!");
+            // if (roomExists != null) return BadRequest("You already have an active room!");
 
             var createdRoom = await _context.Rooms.AddAsync(room);
 

@@ -13,6 +13,9 @@ function MovieCard({ movie }) {
         <p>{movie.genre.name}</p>
       </b>
       <p>{movie.viewCount} views</p>
+      <Link to={`/createroom/${movie.id}`}>
+      <button className='btn btn-primary'>Create Room</button>
+      </Link>
     </div>
   );
 }

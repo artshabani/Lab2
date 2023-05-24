@@ -49,7 +49,7 @@ const Pages = () => {
         <Route path="/edituserinrole/:roleId" element={<EditUserInRole />} />
         <Route path="/statistics" element={<Statistics />} />
         <Route path="/subscription" element={<Subscription />} />
-        <Route path="/createroom" element={<CreateRoom />} />
+        <Route path="/createroom/:movieid" element={<CreateRoom />} />
       </Routes>
     </>
   );

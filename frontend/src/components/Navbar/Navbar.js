@@ -68,7 +68,7 @@ const Navbar = () => {
         )}
         {state.user && (
           <>
-            <li class="nav-item">
+            <li className="nav-item">
               <a style={{ color: 'red' }} href="#">
                 Hi {state.user.name}
               </a>

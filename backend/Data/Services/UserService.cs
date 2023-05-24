@@ -4,7 +4,6 @@ using backend.Models;
 using backend.Data;
 using backend.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using backend.Migrations;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Services

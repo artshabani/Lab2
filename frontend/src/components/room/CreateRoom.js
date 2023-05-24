@@ -1,15 +1,30 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 import './RoomForm.css';
 
-const CreateRoom = ({ createRoom }) => {
-  const [isPrivate, setIsPrivate] = useState(false);
-  const [movieName, setMovieName] = useState('');
-  const [duration, setDuration] = useState('');
+const CreateRoom = () => {
+  const state = useSelector(state => state);
+  const { movieid } = useParams();
+  const [room, setRoom] = useState({
+    movieId: movieid,
+    name: '',
+    public: true,
+    roomAdmin: state.user.email,
+    adminUsername: state.user.username,
+    // userEmails: []
+  });
 
   const handleCreateRoom = (e) => {
     e.preventDefault();
-    // Pass the form values to the createRoom function
-    createRoom({ isPrivate, movieName, duration });
+    console.log(room)
+    axios.post(`http://localhost:5000/api/room`, room)
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setRoom({ ...room, [name]: value });
   };
 
   return (
@@ -18,31 +33,22 @@ const CreateRoom = ({ createRoom }) => {
         <h2>Create Room</h2>
         <form onSubmit={handleCreateRoom}>
           <div className="form-group">
-            <label htmlFor="isPrivate">Room Type:</label>
+            <label>Room Type:</label>
             <input
               type="checkbox"
-              id="isPrivate"
-              checked={isPrivate}
-              onChange={(e) => setIsPrivate(e.target.checked)}
+              checked={room.public}
+              onChange={(e) => setRoom({ ...room, public: !room.public })}
             />
-            <label htmlFor="isPrivate">Private</label>
+            <label >Public</label>
           </div>
           <div className="form-group">
-            <label htmlFor="movieName">Movie Name:</label>
+            <label>Room Name:</label>
             <input
               type="text"
-              id="movieName"
-              value={movieName}
-              onChange={(e) => setMovieName(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="duration">Duration:</label>
-            <input
-              type="text"
-              id="duration"
-              value={duration}
-              onChange={(e) => setDuration(e.target.value)}
+              value={room.name}
+              required
+              onChange={handleInputChange}
+              name="name"
             />
           </div>
           <button type="submit">Create Room</button>
