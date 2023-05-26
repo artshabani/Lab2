@@ -13,19 +13,48 @@ const CreateRoom = () => {
     public: true,
     roomAdmin: state.user.email,
     adminUsername: state.user.username,
-    // userEmails: []
+    userEmails: [],
+    comments: []
   });
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [error2, setError2] = useState('');
 
   const handleCreateRoom = (e) => {
     e.preventDefault();
-    console.log(room)
-    axios.post(`http://localhost:5000/api/room`, room)
+    if (room.userEmails.length === 0 && !room.public) {
+      setError2('Please add an email');
+    } else {
+      console.log(room)
+      setError2('');
+      axios.post(`http://localhost:5000/api/room`, room)
+    }
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setRoom({ ...room, [name]: value });
   };
+
+  function addEmail() {
+    const isValid = validateEmail(email);
+    const updatedRoom = { ...room };
+
+    if (isValid) {
+      updatedRoom.userEmails.push(email);
+      setRoom(updatedRoom);
+      setError('');
+      setEmail('');
+    } else {
+      setError('Invalid email');
+    }
+  }
+
+  function validateEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+.[^\s@]+$/;
+
+    return emailRegex.test(email);
+  }
 
   return (
     <div className="create-room-container">
@@ -51,6 +80,21 @@ const CreateRoom = () => {
               name="name"
             />
           </div>
+
+          {!room.public && <>
+            <div className="form-group">
+              <label>User Emails:</label>
+              <input
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <button className='btn btn-primary' onClick={addEmail}>Add Email</button>
+            </div>
+            <p>{error}</p>
+          </>}
+
+            <p>{error2}</p>
           <button type="submit">Create Room</button>
         </form>
       </div>

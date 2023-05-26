@@ -9,9 +9,11 @@ using Microsoft.AspNetCore.Identity;
 using backend.DTO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 
 namespace backend.Controllers
 {
+    [EnableCors("CorsPolicy")]
     [ApiController]
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
@@ -89,8 +91,6 @@ namespace backend.Controllers
             return createUserObject(user, role);
         }
 
-
-
         [HttpGet]
         [Authorize]
         public async Task<ActionResult<AppUserDto>> GetUser()
@@ -107,7 +107,6 @@ namespace backend.Controllers
                 return Unauthorized("Unauthorized no user found");
             }
         }
-
 
         [HttpPost("register")]
         public async Task<ActionResult<AppUserDto>> CreateUser(RegisterDto registerDto)
