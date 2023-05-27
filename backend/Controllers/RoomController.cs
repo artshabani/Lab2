@@ -38,17 +38,33 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateRoom(Room room)
+        public async Task<ActionResult> CreateRoom(RoomDto room)
         {
             // var roomExists = await _context.Rooms.FirstOrDefaultAsync(a => a.RoomAdmin == room.RoomAdmin);
 
             // if (roomExists != null) return BadRequest("You already have an active room!");
 
-            var createdRoom = await _context.Rooms.AddAsync(room);
+            var newRoom = new Room{
+                Name = room.Name,
+                Public = room.Public,
+                RoomAdmin = room.RoomAdmin,
+                AdminUsername = room.AdminUsername,
+                MovieId = room.MovieId,
+                Comments = new List<Comment>(),
+                UserEmails = new List<UserEmails>()
+            };
 
-            var result = await _context.SaveChangesAsync() > 0;
+            foreach(var email in room.UserEmails){
+                var newEmail = new UserEmails{
+                    UserEmail = email
+                };
 
-            if (!result) return BadRequest("Coudn't Create Room!");
+                newRoom.UserEmails.Add(newEmail);
+            };
+
+            var createdRoom = await _context.Rooms.AddAsync(newRoom);
+
+            await _context.SaveChangesAsync();
 
             return Ok("Room Created Successfully");
         }
@@ -57,7 +73,7 @@ namespace backend.Controllers
         [HttpPut]
         public async Task<ActionResult> AddUsersToRoom(RoomDto room)
         {
-            var currentRoom = await _context.Rooms.Include(a => a.UserEmails).FirstOrDefaultAsync(b => b.Id == room.Id);
+            // var currentRoom = await _context.Rooms.Include(a => a.UserEmails).FirstOrDefaultAsync(b => b.Id == room.Id);
 
             // currentRoom.UserEmails = room.UserEmails;
 

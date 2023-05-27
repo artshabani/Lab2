@@ -14,7 +14,6 @@ const CreateRoom = () => {
     roomAdmin: state.user.email,
     adminUsername: state.user.username,
     userEmails: [],
-    comments: []
   });
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
@@ -89,12 +88,12 @@ const CreateRoom = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              <button className='btn btn-primary' onClick={addEmail}>Add Email</button>
+              <button type='button' className='btn btn-primary' onClick={addEmail}>Add Email</button>
             </div>
             <p>{error}</p>
           </>}
 
-            <p>{error2}</p>
+          <p>{error2}</p>
           <button type="submit">Create Room</button>
         </form>
       </div>

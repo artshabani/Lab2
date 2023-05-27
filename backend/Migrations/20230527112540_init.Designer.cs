@@ -12,7 +12,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230524204506_init")]
+    [Migration("20230527112540_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,9 +109,6 @@ namespace backend.Migrations
 
                     b.Property<Guid?>("RoomId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("UserAvatar")
-                        .HasColumnType("int");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -219,19 +216,12 @@ namespace backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("AdminAvatar")
-                        .HasColumnType("int");
-
                     b.Property<string>("AdminUsername")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
-
-                    b.Property<string>("MoviePoster")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -243,9 +233,6 @@ namespace backend.Migrations
                     b.Property<string>("RoomAdmin")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("StartMode")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -283,8 +270,9 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.UserEmails", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("RoomId")
                         .HasColumnType("uniqueidentifier");

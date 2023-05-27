@@ -84,13 +84,10 @@ namespace backend.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StartMode = table.Column<int>(type: "int", nullable: false),
                     Public = table.Column<bool>(type: "bit", nullable: false),
                     RoomAdmin = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AdminAvatar = table.Column<int>(type: "int", nullable: false),
                     AdminUsername = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MovieId = table.Column<int>(type: "int", nullable: false),
-                    MoviePoster = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    MovieId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -253,7 +250,6 @@ namespace backend.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Body = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserAvatar = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RoomId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
@@ -271,7 +267,7 @@ namespace backend.Migrations
                 name: "UserEmails",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RoomId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
