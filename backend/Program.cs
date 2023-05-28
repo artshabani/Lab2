@@ -20,7 +20,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext")));
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", builder => builder
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .AllowCredentials()
+    .WithExposedHeaders("WWW-Authenticate")
+    .WithOrigins("http://localhost:3000"));
+});
 builder.Services.AddIdentityCore<AppUser>(o =>
 {
     o.Password.RequireNonAlphanumeric = false;
@@ -49,16 +57,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 //i want to get the user that registered
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("CorsPolicy", builder => builder
-    .AllowAnyMethod()
-    .AllowAnyHeader()
-    .AllowCredentials()
-    .WithExposedHeaders("WWW-Authenticate")
-    .WithOrigins("http://localhost:3000"));
-});
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -69,7 +67,6 @@ if (app.Environment.IsDevelopment())
 
 // app.UseHttpsRedirection();
 app.UseRouting();
-
 
 app.UseCors("CorsPolicy");
 

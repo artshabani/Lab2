@@ -24,6 +24,8 @@ import EditUserInRole from './admin/EditUserInRole';
 import Statistics from './admin/Statistics';
 import Subscription from './Subscription/Subscription';
 import CreateRoom from './room/CreateRoom'
+import Room from './room/Room';
+import AllRooms from './room/AllRooms';
 
 const Pages = () => {
   return (
@@ -50,6 +52,8 @@ const Pages = () => {
         <Route path="/statistics" element={<Statistics />} />
         <Route path="/subscription" element={<Subscription />} />
         <Route path="/createroom/:movieid" element={<CreateRoom />} />
+        <Route path="/room/:id" element={<Room />} />
+        <Route path="/rooms" element={<AllRooms />} />
       </Routes>
     </>
   );

@@ -9,11 +9,9 @@ using Microsoft.AspNetCore.Identity;
 using backend.DTO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 
 namespace backend.Controllers
 {
-    [EnableCors("CorsPolicy")]
     [ApiController]
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
@@ -108,6 +106,7 @@ namespace backend.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult<AppUserDto>> CreateUser(RegisterDto registerDto)
         {
@@ -159,6 +158,7 @@ namespace backend.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<AppUserDto>> Login(LoginDto loginDto)
         {

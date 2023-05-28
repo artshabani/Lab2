@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using backend.Models;
 using backend.Services.Interfaces;
-using Microsoft.AspNetCore.Cors;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using backend.Data;
@@ -11,7 +10,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace backend.Controllers
 {
-    [EnableCors("CorsPolicy")]
     [ApiController]
     [Route("api/[controller]")]
     public class MoviesController : ControllerBase

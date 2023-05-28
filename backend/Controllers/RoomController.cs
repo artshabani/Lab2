@@ -44,7 +44,9 @@ namespace backend.Controllers
 
             // if (roomExists != null) return BadRequest("You already have an active room!");
 
-            var newRoom = new Room{
+            var newRoom = new Room
+            {
+                Id = room.Id,
                 Name = room.Name,
                 Public = room.Public,
                 RoomAdmin = room.RoomAdmin,
@@ -54,21 +56,25 @@ namespace backend.Controllers
                 UserEmails = new List<UserEmails>()
             };
 
-            foreach(var email in room.UserEmails){
-                var newEmail = new UserEmails{
-                    UserEmail = email
+            if (!room.Public)
+            {
+                foreach (var email in room.UserEmails)
+                {
+                    var newEmail = new UserEmails
+                    {
+                        UserEmail = email
+                    };
+
+                    newRoom.UserEmails.Add(newEmail);
                 };
-
-                newRoom.UserEmails.Add(newEmail);
-            };
-
-            var createdRoom = await _context.Rooms.AddAsync(newRoom);
+            }
+            await _context.Rooms.AddAsync(newRoom);
 
             await _context.SaveChangesAsync();
 
-            return Ok("Room Created Successfully");
+            return Ok("createdRoom");
         }
-        
+
         //Not functional yet
         [HttpPut]
         public async Task<ActionResult> AddUsersToRoom(RoomDto room)

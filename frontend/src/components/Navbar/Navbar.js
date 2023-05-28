@@ -56,6 +56,11 @@ const Navbar = () => {
             <a href="#">Dashboard</a>
           </Link>
         </li>
+        <li>
+          <Link to="/rooms">
+            <a href="#">Rooms</a>
+          </Link>
+        </li>
         {!state.user && (
           <>
             <li>

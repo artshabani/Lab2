@@ -1,5 +1,5 @@
 .video-container {
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -8,12 +8,16 @@
   background-image: url(../ComponentsCSS/icons/art.jpg);
   background-size: cover;
   background-position: center;
+  padding-right: 400px;
 }
 
 .video-player {
   width: 1000px;
+  max-width: 1000px;
   border: 1.5px solid white;
 }
 h2 {
   color: red;
+  text-align: left;
+  margin-left: 20px;
 }

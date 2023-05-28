@@ -1,13 +1,15 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import './RoomForm.css';
+import { v4 as uuidv4 } from 'uuid';
 
 const CreateRoom = () => {
   const state = useSelector(state => state);
   const { movieid } = useParams();
   const [room, setRoom] = useState({
+    id: uuidv4(),
     movieId: movieid,
     name: '',
     public: true,
@@ -18,15 +20,17 @@ const CreateRoom = () => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [error2, setError2] = useState('');
+  const navigate = useNavigate();
 
-  const handleCreateRoom = (e) => {
+  const handleCreateRoom = async (e) => {
     e.preventDefault();
     if (room.userEmails.length === 0 && !room.public) {
       setError2('Please add an email');
     } else {
-      console.log(room)
       setError2('');
-      axios.post(`http://localhost:5000/api/room`, room)
+      await axios.post(`http://localhost:5000/api/room`, room);
+      console.log(room)
+      navigate(`/room/${room.id}`)
     }
   };
 
