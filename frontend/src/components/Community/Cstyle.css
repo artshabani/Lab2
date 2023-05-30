@@ -1,0 +1,23 @@
+.topics-container {
+    border: 1px solid black;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 700px;
+}
+
+.topic-item {
+    margin-bottom: 10px;
+}
+
+.comment-item {
+    margin-left: 20px;
+}
+
+.comments-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+form {
+    margin-top: 10px;
+}

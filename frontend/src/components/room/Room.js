@@ -3,17 +3,21 @@ import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { useNavigate } from 'react-router-dom';
-import MovieCard from '../Movies/MovieCard';
 import '../ComponentsCSS/MovieDetails.css';
 import '../ComponentsCSS/PlayMovie.css'
 import './room.css'
 
 function Room() {
-    const [room, setRoom] = useState(null)
+    const [room, setRoom] = useState(null);
     const [movie, setMovie] = useState(null);
     const { id } = useParams();
     const navigate = useNavigate();
     const history = createBrowserHistory();
+    const [showPopup, setShowPopup] = useState(false);
+
+    const handleClose = () => {
+        setShowPopup(false);
+    };
 
     useEffect(() => {
         getRoom();
@@ -34,11 +38,15 @@ function Room() {
     const getRoom = async () => {
         await axios.get(`http://localhost:5000/api/room/${id}`).then((res) => {
             setRoom(res.data)
+            console.log(res.data)
         })
     }
 
-    const endRoom = () => {
-
+    const endRoom = async () => {
+        await axios.put(`http://localhost:5000/api/room/${id}`).then((res) => {
+            setRoom(res.data)
+            setShowPopup(true)
+        })
     }
 
     if (!movie) {
@@ -52,7 +60,7 @@ function Room() {
                 <video class="video-player" controls autoplay>
                     <source src="/Wednesday.mp4" type="video/mp4" />
                 </video>
-                <button className='btn btn-danger'>End Room</button>
+                <button className='btn btn-danger' onClick={endRoom}>End Room</button>
                 <div className="col-md-5">
                     <div className="row">
                         <div className="col-md-11" style={{
@@ -81,6 +89,14 @@ function Room() {
                     </div>
                 </div>
             </div>
+                {showPopup && (
+                    <div className="popup-overlay">
+                        <div className="popup-container">
+                            <p className="popup-message">This room has ended</p>
+                            <button className="close-btn" onClick={handleClose}>Close</button>
+                        </div>
+                    </div>
+                )}
         </>
     );
 }

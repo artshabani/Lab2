@@ -51,6 +51,7 @@ namespace backend.Controllers
                 Public = room.Public,
                 RoomAdmin = room.RoomAdmin,
                 AdminUsername = room.AdminUsername,
+                Status = true,
                 MovieId = room.MovieId,
                 Comments = new List<Comment>(),
                 UserEmails = new List<UserEmails>()
@@ -75,19 +76,17 @@ namespace backend.Controllers
             return Ok("createdRoom");
         }
 
-        //Not functional yet
-        [HttpPut]
-        public async Task<ActionResult> AddUsersToRoom(RoomDto room)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> EndRoom(Guid id)
         {
-            // var currentRoom = await _context.Rooms.Include(a => a.UserEmails).FirstOrDefaultAsync(b => b.Id == room.Id);
-
-            // currentRoom.UserEmails = room.UserEmails;
+            var room = await _context.Rooms.FindAsync(id);
+            room.Status = false;
 
             var result = await _context.SaveChangesAsync() > 0;
 
-            if (!result) return BadRequest("Coudn't Add Users to the Room!");
+            if (!result) return BadRequest("Coudn't end Room!");
 
-            return Ok("Users added Successfully");
+            return Ok(room);
         }
 
         [HttpDelete("{id}")]

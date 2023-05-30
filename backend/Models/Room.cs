@@ -10,6 +10,7 @@ namespace backend.Models
         public string RoomAdmin { get; set; }
         public string AdminUsername { get; set; }
         public int MovieId { get; set; }
+        public bool Status { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public ICollection<UserEmails> UserEmails { get; set; }
     }
