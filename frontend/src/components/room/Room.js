@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import '../ComponentsCSS/MovieDetails.css';
 import '../ComponentsCSS/PlayMovie.css'
 import './room.css'
+import { useSelector } from 'react-redux';
 
 function Room() {
     const [room, setRoom] = useState(null);
@@ -14,6 +15,7 @@ function Room() {
     const navigate = useNavigate();
     const history = createBrowserHistory();
     const [showPopup, setShowPopup] = useState(false);
+    const state = useSelector(state => state);
 
     const handleClose = () => {
         setShowPopup(false);
@@ -26,6 +28,7 @@ function Room() {
     useEffect(() => {
         if (room) {
             getMovie()
+            CheckPrivate()
         }
     }, [room])
 
@@ -47,6 +50,21 @@ function Room() {
             setRoom(res.data)
             setShowPopup(true)
         })
+    }
+
+    function CheckPrivate() {
+        let found = false;
+
+        if (state.user) {
+            room.userEmails.forEach((user) => {
+                if (state.user.email === user.userEmail) {
+                    found = true;
+                }
+            })
+        }
+        if (found == false) {
+            navigate('/')
+        }
     }
 
     if (!movie) {
@@ -89,14 +107,14 @@ function Room() {
                     </div>
                 </div>
             </div>
-                {showPopup && (
-                    <div className="popup-overlay">
-                        <div className="popup-container">
-                            <p className="popup-message">This room has ended</p>
-                            <button className="close-btn" onClick={handleClose}>Close</button>
-                        </div>
+            {showPopup && (
+                <div className="popup-overlay">
+                    <div className="popup-container">
+                        <p className="popup-message">This room has ended</p>
+                        <button className="close-btn" onClick={handleClose}>Close</button>
                     </div>
-                )}
+                </div>
+            )}
         </>
     );
 }
