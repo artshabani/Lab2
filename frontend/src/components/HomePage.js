@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import MovieCard from './Movies/MovieCard';
+import Footer from './Footer';
 
 function HomePage() {
   const [topMovies, setTopMovies] = useState([]);
@@ -16,7 +18,7 @@ function HomePage() {
   }, []);
 
   return (
-    <div>
+    <div style={{ background: 'rgba(26, 26, 26, 0.99)', color: 'white', textAlign: 'center' }}>
       <br />
       <h1>Unlimited movies, <br/>endless entertainment.</h1>
       <br />
@@ -24,23 +26,21 @@ function HomePage() {
       <h6>Experience the magic of cinema from the comfort of your home</h6>
       <br />
       <br />
-      <br />
       <Link to="/signup" className="nav-link"><button className="btn btn-success">Get Started</button></Link>
-      <Link to="/movies" className="nav-link"><button className="btn btn-primary">Try For Free</button></Link>
       <br />
-      <h2>Top 3 Most Viewed Movies</h2>
-      <ul>
+      <br />
+      <br />
+      <h2 style={{ display: 'flex', justifyContent: 'center', color: 'white'}}>Current Top 3 Movies</h2>
+      <ul style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', padding: 0 }}>
         {topMovies.map(movie => (
-          <li key={movie.id}>
-            <br />
-            <br />
-            <p>
-              {movie.title} with <b>{movie.viewCount} views</b>{' '}
-            </p>
-            <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
+          <li key={movie.id} style={{ flexBasis: '33.33%', padding: '5px' }}>
+            <MovieCard key={movie.id} movie={movie} />
           </li>
         ))}
       </ul>
+      <Footer>
+        
+      </Footer>
     </div>
   );
 }

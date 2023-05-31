@@ -87,8 +87,8 @@ function LogList() {
             <div className="table-title">
               <div className="row">
                 <div className="col-xs-6">
-                  <h2>
-                    Log <b>list</b>
+                  <h2 style={{ color: 'black'}}>
+                    Log List
                   </h2>
                 </div>
                 <div className="col-xs-6">

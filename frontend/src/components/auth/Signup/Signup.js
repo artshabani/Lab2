@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link } from 'react-router-dom';
 
 export class Signup extends Component {
   constructor() {
@@ -56,79 +57,80 @@ export class Signup extends Component {
 
   render() {
     return (
-      // <>
-      //      <div class="tab-content">
-      //         <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
-      //             <form class='card p-3 bg-light' style={{ width: 700, display: 'inline-block', top: 30 }} >
-
-      //             <div class="form-outline mb-4">
-      //                 <input type="text" id="name_field" class="form-control" />
-      //                 <label class="form-label" for="registerName">Name</label>
-      //             </div>
-
-      //             <div class="form-outline mb-4">
-      //                 <input type="text" id="username_field" class="form-control" />
-      //                 <label class="form-label" for="registerUsername">Username</label>
-      //             </div>
-
-      //             <div class="form-outline mb-4">
-      //                 <input type="email" id="registerEmail" class="form-control" />
-      //                 <label class="form-label" for="registerEmail">Email</label>
-      //             </div>
-
-      //             <div class="form-outline mb-4">
-      //                 <input type="password" id="password_field" class="form-control" />
-      //                 <label class="form-label" for="registerPassword">Password</label>
-      //             </div>
-
-      //             <div class="form-outline mb-4">
-      //                 <input type="password" id="confirmpassword_field" class="form-control" />
-      //                 <label class="form-label" for="registerRepeatPassword">Confirm password</label>
-      //             </div>
-
-      //             <div class="form-check d-flex justify-content-center mb-4">
-      //                 <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked
-      //                     aria-describedby="registerCheckHelpText" />
-      //                 <label class="form-check-label" for="registerCheck">
-      //                     I have read and agree to the terms
-      //                 </label>
-      //             </div>
-
-      //             <button onClick={() => { this.signup() }} type="submit" class="btn btn-primary btn-block mb-3">Sign in</button>
-      //         </form>
-      //     </div>
-      //     </div>
-      // </>
-
-      <div className="center" style={{ alignItems: 'center' }}>
-        <h1>Sign up</h1>
-        Name:
-        <div className="txt_field">
-          <input type="text" id="name_field" /> <br />
+      <>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div className="container">
+          <div className="row">
+            <div className="col-md-6">
+              <form>
+                <h3 style={{ color: 'black', textAlign: 'left' }}>Sign up</h3>
+                <h4 style={{ color: 'black', textAlign: 'left' }}>Create a new account.</h4>
+                <br />
+                <div className="form-group">
+                  <label htmlFor="email" style={{ textAlign: 'left' }}>Name</label>
+                  <input type="email" className="form-control" id="name_field" placeholder="Enter name" />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="email" style={{ textAlign: 'left' }}>Username</label>
+                  <input type="email" className="form-control" id="username_field" placeholder="Enter username" />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="email" style={{ textAlign: 'left' }}>Email</label>
+                  <input type="email" className="form-control" id="email_field" placeholder="Enter email" />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="password" style={{ textAlign: 'left' }}>Password</label>
+                  <input type="password" className="form-control" id="password_field" placeholder="Enter password" />
+                </div>
+                <div className="form-group form-check">
+                  <input type="checkbox" className="form-check-input" id="rememberMe" checked={this.state.rememberMe} onChange={this.handleRememberMeChange} />
+                  <label className="form-check-label" htmlFor="rememberMe" style={{ textAlign: 'left' }}>Remember Me</label>
+                </div>
+                <button type="submit" onClick={() => {this.signup();}} className="btn btn-primary">Signup</button>
+                <br />
+                <br />
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  <h6 style={{ marginRight: '5px' }}>Already have an account?</h6>
+                  <Link to="/login">Log in</Link>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
-        Username:
-        <div className="txt_field">
-          <input type="text" id="username_field" /> <br />
-        </div>
-        Email:
-        <div className="txt_field">
-          <input type="text" id="email_field" /> <br />
-        </div>
-        Password:
-        <div className="txt_field">
-          <input type="password" id="password_field" /> <br />
-        </div>
-        <div className="button">
-          <button
-            onClick={() => {
-              this.signup();
-            }}
-            className="btn btn-primary"
-          >
-            Sign up
-          </button>
-        </div>
-      </div>
+      </>
+      // <div className="center" style={{ alignItems: 'center' }}>
+      //   <h1>Sign up</h1>
+      //   Name:
+      //   <div className="txt_field">
+      //     <input type="text" id="name_field" /> <br />
+      //   </div>
+      //   Username:
+      //   <div className="txt_field">
+      //     <input type="text" id="username_field" /> <br />
+      //   </div>
+      //   Email:
+      //   <div className="txt_field">
+      //     <input type="text" id="email_field" /> <br />
+      //   </div>
+      //   Password:
+      //   <div className="txt_field">
+      //     <input type="password" id="password_field" /> <br />
+      //   </div>
+      //   <div className="button">
+      //     <button
+      //       onClick={() => {
+      //         this.signup();
+      //       }}
+      //       className="btn btn-primary"
+      //     >
+      //       Sign up
+      //     </button>
+      //   </div>
+      // </div>
     );
   }
 }

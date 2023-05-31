@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { Link } from "react-router-dom";
 
 export class Login extends Component {
     constructor() {
@@ -8,15 +8,14 @@ export class Login extends Component {
             email: null,
             password: null,
             login: false,
-            store: null
+            store: null,
+            rememberMe: false
         }
     }
 
     componentDidMount() {
         this.storeCollector()
     }
-
-
 
     storeCollector() {
         let store = JSON.parse(localStorage.getItem('login'));
@@ -75,9 +74,49 @@ export class Login extends Component {
         })
     }
 
+    handleRememberMeChange = (event) => {
+        this.setState({ rememberMe: event.target.checked });
+    };
+
     render() {
         return (
             <>
+                {/* <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-6">
+                            <form>
+                                <h3 style={{ color: 'black', textAlign: 'left' }}>Login</h3>
+                                <h4 style={{ color: 'black', textAlign: 'left' }}>Use an existing account to log in.</h4>
+                                <br />
+                                <div className="form-group">
+                                    <label htmlFor="email" style={{ textAlign: 'left' }}>Email</label>
+                                    <input type="email" className="form-control" id="email_field" placeholder="Enter email" />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="password" style={{ textAlign: 'left' }}>Password</label>
+                                    <input type="password" className="form-control" id="password_field" placeholder="Enter password" />
+                                </div>
+                                <div className="form-group form-check">
+                                    <input type="checkbox" className="form-check-input" id="rememberMe" checked={this.state.rememberMe} onChange={this.handleRememberMeChange} />
+                                    <label className="form-check-label" htmlFor="rememberMe" style={{ textAlign: 'left' }}>Remember Me</label>
+                                </div>
+                                <button type="submit" onClick={() => { this.login() }} className="btn btn-primary">Login</button>
+                                <br />
+                                <br />
+                                <div style={{ display: 'flex' , justifyContent: 'center'}}>
+                                    <h6 style={{ marginRight: '5px' }}>Don't have an account?</h6>
+                                    <Link to="/signup">Sign up</Link>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div> */}
+
                 <div className="center" style={{ alignItems: 'center' }}>
                     <h1>Log In</h1>
 
@@ -94,44 +133,6 @@ export class Login extends Component {
                         <button onClick={() => { this.login() }} className="btn btn-primary">Log in</button>
                     </div>
                 </div>
-                {/* <div class="tab-content">
-                    <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
-                        <form class='card p-3 bg-light' style={{ width: 700, display: 'inline-block', top: 30 }} >
-                        <div class="form-outline mb-4">
-                            <input type="email" id="username_field" class="form-control" />
-                            <label class="form-label" for="loginName">Username</label>
-                        </div>
-
-                        <div class="form-outline mb-4">
-                            <input type="password" id="password_field" class="form-control" />
-                            <label class="form-label" for="loginPassword">Password</label>
-                        </div>
-
-                        <div class="row mb-4">
-                            <div class="col-md-6 d-flex justify-content-center">
-
-                                <div class="form-check mb-3 mb-md-0">
-                                    <input class="form-check-input" type="checkbox" value="" id="loginCheck" checked />
-                                    <label class="form-check-label" for="loginCheck"> Remember me </label>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 d-flex justify-content-center">
-
-                                <a href="#!">Forgot password?</a>
-                            </div>
-                        </div>
-
-
-                        <button onClick={() => { this.login() }} type="submit" class="btn btn-primary" style={{ width: 80 }}>Log in</button>
-
-
-                        <div class="text-center">
-                            <p>Not a member? <a href="#!">Register</a></p>
-                        </div>
-                    </form>
-                </div>
-            </div > */}
             </>
         )
     }

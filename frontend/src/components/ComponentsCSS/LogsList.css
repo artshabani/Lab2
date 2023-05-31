@@ -78,13 +78,13 @@ body {
   padding: 6px 0;
 }
 .created {
-  background-color: green;
+  background-color: #d6f5d6;
 }
 .deleted {
-  background-color: red;
+  background-color: #ff6961;
 }
 .updated {
-  background-color: yellow;
+  background-color: #fdfd96;
 }
 .search-box i {
   color: #a0a5b1;
