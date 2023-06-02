@@ -7,6 +7,9 @@ import '../ComponentsCSS/MovieDetails.css';
 import '../ComponentsCSS/PlayMovie.css'
 import './room.css'
 import { useSelector } from 'react-redux';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
+import Button from 'react-bootstrap/Button';
 
 function Room() {
     const [room, setRoom] = useState(null);
@@ -16,6 +19,7 @@ function Room() {
     const history = createBrowserHistory();
     const [showPopup, setShowPopup] = useState(false);
     const state = useSelector(state => state);
+    const [showTooltip, setShowTooltip] = useState(false);
 
     const handleClose = () => {
         setShowPopup(false);
@@ -52,6 +56,22 @@ function Room() {
         })
     }
 
+    const handleShareClick = () => {
+        const url = window.location.href;
+        navigator.clipboard
+            .writeText(url)
+            .then(() => {
+                console.log("URL copied to clipboard:", url);
+                setShowTooltip(true);
+                setTimeout(() => {
+                    setShowTooltip(false);
+                }, 2000); // Hide tooltip after 2 seconds
+            })
+            .catch((error) => {
+                console.error("Failed to copy URL to clipboard:", error);
+            });
+    };
+
     function CheckPrivate() {
         let found = false;
 
@@ -79,6 +99,23 @@ function Room() {
                     <source src="/Wednesday.mp4" type="video/mp4" />
                 </video>
                 <button className='btn btn-danger' onClick={endRoom}>End Room</button>
+                <OverlayTrigger
+                    overlay={
+                      <Tooltip id="tooltip-disabled">
+                        Link copied successfully!
+                      </Tooltip>
+                    }
+                    show={showTooltip}
+                    placement="top"
+                  >
+                    <Button
+                      className="me-2"
+                      variant="secondary"
+                      onClick={handleShareClick}
+                    >
+                      Share
+                    </Button>
+                  </OverlayTrigger>
                 <div className="col-md-5">
                     <div className="row">
                         <div className="col-md-11" style={{

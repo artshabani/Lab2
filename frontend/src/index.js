@@ -12,6 +12,7 @@ import rootReducer from './redux/reducers';
 import { setUser } from './redux/actions/index'
 import { PersistGate } from 'redux-persist/integration/react';
 import store  from './redux/store'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
