@@ -10,9 +10,14 @@ import { useSelector } from 'react-redux';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import Button from 'react-bootstrap/Button';
+import {
+    HubConnection,
+    HubConnectionBuilder,
+    LogLevel,
+} from "@microsoft/signalr";
 
 function Room() {
-    const [room, setRoom] = useState(null);
+    const [currentRoom, setCurrentRoom] = useState(null);
     const [movie, setMovie] = useState(null);
     const { id } = useParams();
     const navigate = useNavigate();
@@ -20,6 +25,12 @@ function Room() {
     const [showPopup, setShowPopup] = useState(false);
     const state = useSelector(state => state);
     const [showTooltip, setShowTooltip] = useState(false);
+    const [message, setMessage] = useState('');
+
+    const [comments, setComments] = useState([]);
+    const [hubConnection, setHubConnection] = useState(null);
+
+    //let hubConnection = null;
 
     const handleClose = () => {
         setShowPopup(false);
@@ -30,28 +41,34 @@ function Room() {
     }, [id]);
 
     useEffect(() => {
-        if (room) {
+        if (currentRoom) {
             getMovie()
             CheckPrivate()
         }
-    }, [room])
+    }, [currentRoom])
+
+    useEffect(() => {
+        createHubConnection(id);
+        return () => {
+            clearComments();
+        };
+    }, [id]);
 
     const getMovie = async () => {
-        await axios.get(`http://localhost:5000/api/movies/${room.movieId}`).then((response) => {
+        await axios.get(`http://localhost:5000/api/movies/${currentRoom.movieId}`).then((response) => {
             setMovie(response.data);
         });
     }
 
     const getRoom = async () => {
         await axios.get(`http://localhost:5000/api/room/${id}`).then((res) => {
-            setRoom(res.data)
-            console.log(res.data)
+            setCurrentRoom(res.data)
         })
     }
 
     const endRoom = async () => {
         await axios.put(`http://localhost:5000/api/room/${id}`).then((res) => {
-            setRoom(res.data)
+            setCurrentRoom(res.data)
             setShowPopup(true)
         })
     }
@@ -75,17 +92,87 @@ function Room() {
     function CheckPrivate() {
         let found = false;
 
-        if (state.user) {
-            room.userEmails.forEach((user) => {
-                if (state.user.email === user.userEmail) {
-                    found = true;
-                }
-            })
-        }
-        if (found == false) {
-            navigate('/')
+        if (currentRoom.public !== true) {
+            if (state.user) {
+                currentRoom.userEmails.forEach((user) => {
+                    if (state.user.email === user.userEmail) {
+                        found = true;
+                    }
+                })
+            }
+            if (found == false) {
+                navigate('/')
+            }
         }
     }
+
+    const handleComment = () => {
+        const obj = {
+            body: message,
+            username: state.user.username,
+            roomId: id.toString(),
+        };
+        if (message) {
+            addComment(obj).then(() => setMessage(""));
+        }
+    };
+
+    const createHubConnection = (roomId) => {
+        if (roomId) {
+            const connection = new HubConnectionBuilder()
+                .withUrl("http://localhost:5000/room/" + "?roomId=" + roomId, {
+                    accessTokenFactory: () => state.user.token,
+                })
+                .withAutomaticReconnect()
+                .configureLogging(LogLevel.Information)
+                .build();
+
+            connection
+                .start()
+                .catch((error) =>
+                    console.log("Error establishing the connection: ", error)
+                );
+
+            connection.on("LoadComments", (room) => {
+                console.log("is working dis ?", room);
+                if (room.comments) {
+                    room.comments.forEach((comment) => {
+                        comment.createdAt = new Date(comment.createdAt);
+                    });
+                    setComments(room.comments);
+                }
+                setCurrentRoom(room.currentRoom);
+            });
+
+            connection.on("ReceiveComment", (comment) => {
+                comment.createdAt = new Date(comment.createdAt);
+                setComments((prevComments) => [...prevComments, comment]);
+            });            
+
+            setHubConnection(connection);
+        }
+    };
+
+    const stopHubConnection = () => {
+        hubConnection
+            .stop()
+            .catch((error) => console.log("Error stopping connection: ", error));
+    };
+
+    const clearComments = () => {
+        setComments([]);
+        stopHubConnection();
+    };
+
+    const addComment = async (values) => {
+        if (state.user && hubConnection && hubConnection) {
+            try {
+                await hubConnection.invoke("SendComment", values);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    };
 
     if (!movie) {
         return <div>Loading...</div>;
@@ -101,21 +188,21 @@ function Room() {
                 <button className='btn btn-danger' onClick={endRoom}>End Room</button>
                 <OverlayTrigger
                     overlay={
-                      <Tooltip id="tooltip-disabled">
-                        Link copied successfully!
-                      </Tooltip>
+                        <Tooltip id="tooltip-disabled">
+                            Link copied successfully!
+                        </Tooltip>
                     }
                     show={showTooltip}
                     placement="top"
-                  >
+                >
                     <Button
-                      className="me-2"
-                      variant="secondary"
-                      onClick={handleShareClick}
+                        className="me-2"
+                        variant="secondary"
+                        onClick={handleShareClick}
                     >
-                      Share
+                        Share
                     </Button>
-                  </OverlayTrigger>
+                </OverlayTrigger>
                 <div className="col-md-5">
                     <div className="row">
                         <div className="col-md-11" style={{
@@ -126,18 +213,16 @@ function Room() {
                         }}>
                             <div className="chat-container dark-mode">
                                 <div className="chat-messages">
-                                    <div className="chat-message">
-                                        <span className="chat-sender">John Doe:</span>
-                                        <span className="chat-text">Hey, how's it going?</span>
-                                    </div>
-                                    <div className="chat-message">
-                                        <span className="chat-sender">Jane Smith:</span>
-                                        <span className="chat-text">Doing great, thanks!</span>
-                                    </div>
+                                    {comments.map((comment) => (
+                                        <div className="chat-message" key={comment.id}>
+                                            <span className="chat-sender">{comment.username}:</span>
+                                            <span className="chat-text">{comment.body}</span>
+                                        </div>
+                                    ))}
                                 </div>
                                 <div className="chat-input-container">
-                                    <input type="text" className="chat-input" placeholder="Type your message..." />
-                                    <button className="chat-send-btn">Send</button>
+                                    <input onChange={(e) => setMessage(e.target.value)} type="text" className="chat-input" placeholder="Type your message..." />
+                                    <button onClick={handleComment} className="chat-send-btn">Send</button>
                                 </div>
                             </div>
                         </div>

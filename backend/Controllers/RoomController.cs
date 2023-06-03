@@ -92,9 +92,13 @@ namespace backend.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteRoom(Guid id)
         {
-            var room = await _context.Rooms.FindAsync(id);
+            var room = await _context.Rooms.Include(a => a.UserEmails).Include(a => a.Comments).FirstOrDefaultAsync(a => a.Id == id);
 
             if (room == null) return BadRequest("Room coudn't be found!");
+
+            _context.RemoveRange(room.UserEmails);
+
+            _context.RemoveRange(room.Comments);
 
             _context.Rooms.Remove(room);
 

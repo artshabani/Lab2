@@ -11,6 +11,7 @@ using Microsoft.OpenApi.Models;
 using backend.Models;
 using System.IdentityModel.Tokens.Jwt;
 using Data;
+using backend.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,11 +53,25 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                   ValidateIssuer = false,
                   ValidateAudience = false
               };
-          });
+              x.Events = new JwtBearerEvents
+              {
+                  OnMessageReceived = context =>
+                  {
+                      var accessToken = context.Request.Query["access_token"];
+                      var path = context.HttpContext.Request.Path;
+                      if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/room")))
+                      {
+                          context.Token = accessToken;
+                      }
+                      return Task.CompletedTask;
+                  }
+              };
+          }
+);
 
 //i want to get the user that registered
 builder.Services.AddHttpContextAccessor();
-
+builder.Services.AddSignalR();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -74,6 +89,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<RoomHub>("/room");
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Movies}/{action=Index}/{id?}");

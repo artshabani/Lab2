@@ -19,6 +19,13 @@ function AllRooms() {
         })
     }
 
+    // const deleteRoom = async (id) => {
+    //     await axios.delete(`http://localhost:5000/api/room/${id}`).then((res) => {
+    //         const filteredRooms = rooms.filter((room) => room.id !== id);
+    //         setRooms(filteredRooms);
+    //     });
+    // };
+
     function filerRooms(rooms) {
         return rooms.filter((room) => {
             if (privacy == 'public') {
@@ -52,6 +59,9 @@ function AllRooms() {
                         <Link to={`/room/${room.id}`}>
                             <h3>{room.name}</h3>
                         </Link>
+                        {/* {privacy === 'mine' &&
+                            <button onClick={deleteRoom(room.id)} className="btn btn-danger">Delete Room</button>
+                        } */}
                     </div>
                 ))}
             </div>
