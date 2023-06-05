@@ -87,7 +87,7 @@ function LogList() {
             <div className="table-title">
               <div className="row">
                 <div className="col-xs-6">
-                  <h2 style={{ color: 'black'}}>
+                  <h2 style={{ color: 'black' }}>
                     Log List
                   </h2>
                 </div>
@@ -146,7 +146,7 @@ function LogList() {
                 Showing <b>{currentLogs.length}</b> out of{' '}
                 <b>{filteredLogs.length}</b> entries
               </div>
-              <div className="pagination">
+              <div className="pagination d-flex justify-content-center">
                 <Pagination
                   count={Math.ceil(filteredLogs.length / logsPerPage)}
                   page={currentPage}
@@ -154,6 +154,7 @@ function LogList() {
                   variant="outlined"
                   shape="rounded"
                   color="primary"
+                  style={{ backgroundColor: "white" }}
                 />
               </div>
             </div>

@@ -1,25 +1,30 @@
 import React, { useState } from 'react';
 import './Cstyle.css';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 function Community() {
     const [topics, setTopics] = useState([]);
     const [comments, setComments] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
 
+    const state = useSelector(state => state);
 
     const filteredMovies = topics.filter(topic => {
         const regex = new RegExp(searchTerm, 'gi');
         const matchesSearchTerm =
             regex.test(topic.topic)
-        //     regex.test(movie.genre.name) ||
-        //     regex.test(movie.description);
-        // const matchesSelectedCategory =
-        //     selectedCategory === '' || movie.genre.name === selectedCategory;
         return matchesSearchTerm;
     });
 
-    const handleNewTopic = (topic) => {
-        setTopics([...topics, topic]);
+    const handleNewTopic = async(topic) => {
+        const obj = {
+            topic : topic,
+            username : state.user.username
+        }
+        await axios.post(`http://localhost:5000/api/community`, obj).then((response) => {
+            setTopics([...topics, topic]);
+        })
     };
 
     const handleNewComment = (comment) => {
@@ -28,8 +33,8 @@ function Community() {
 
     const handleSearch = event => {
         setSearchTerm(event.target.value);
-      };
-    
+    };
+
 
     return (
         <div>

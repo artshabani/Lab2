@@ -37,7 +37,7 @@ function CreateRole() {
                         <div className="modal-body">
                             <div className="form-group">
                                 <label>RoleName:</label>
-                                <input name="RoleName" id="RoleName" type="text" className="form-control" value="" required />
+                                <input onChange={(e)=>setRoleName(e.target.value)} name="RoleName" id="RoleName" type="text" className="form-control" required />
                             </div>
                         </div>
                         <div className="modal-footer">

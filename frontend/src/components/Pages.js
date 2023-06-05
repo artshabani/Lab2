@@ -27,6 +27,7 @@ import CreateRoom from './room/CreateRoom'
 import Room from './room/Room';
 import AllRooms from './room/AllRooms';
 import Community from './Community/Community';
+import Topic from './Community/Topic';
 
 const Pages = () => {
   return (
@@ -56,6 +57,7 @@ const Pages = () => {
         <Route path="/room/:id" element={<Room />} />
         <Route path="/rooms" element={<AllRooms />} />
         <Route path="/community" element={<Community />} />
+        <Route path="/topic" element={<Topic />} />
       </Routes>
     </>
   );

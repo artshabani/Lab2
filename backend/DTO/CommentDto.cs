@@ -5,5 +5,6 @@ namespace backend.DTO
         public string Body { get; set; }
         public string Username { get; set; }
         public string RoomId { get; set; }
+        public string TopicId { get; set; }
     }
 }

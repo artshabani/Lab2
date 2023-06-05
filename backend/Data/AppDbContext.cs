@@ -25,6 +25,8 @@ namespace backend.Data
         public DbSet<Room> Rooms { get; set; }
         
         public DbSet<UserEmails> UserEmails { get; set; }
+
+        public DbSet<Community> Community { get; set; }
        
     }
 }

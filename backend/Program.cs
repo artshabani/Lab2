@@ -63,6 +63,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                       {
                           context.Token = accessToken;
                       }
+                      if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/topic")))
+                      {
+                          context.Token = accessToken;
+                      }
                       return Task.CompletedTask;
                   }
               };
@@ -91,6 +95,8 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapHub<RoomHub>("/room");
+
+app.MapHub<CommunityHub>("/topic");
 
 app.MapControllerRoute(
     name: "default",
