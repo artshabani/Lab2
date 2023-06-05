@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using backend.Models;
 using backend.Data;
+using backend.DTO;
 
 namespace backend.Controllers
 {
@@ -28,14 +29,11 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateCommunity(Community community)
+        public async Task<ActionResult> CreateCommunity(TopicDto community)
         {
             var newCommunity = new Community
             {
-                Id = community.Id,
                 Topic = community.Topic,
-                Comments = new List<Comment>(),
-                CreatedAt = community.CreatedAt,
                 Username = community.Username
             };
 

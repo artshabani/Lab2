@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Cstyle.css';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
@@ -10,6 +10,10 @@ function Community() {
 
     const state = useSelector(state => state);
 
+    useEffect(() => {
+        getTopic();
+    }, []);
+
     const filteredMovies = topics.filter(topic => {
         const regex = new RegExp(searchTerm, 'gi');
         const matchesSearchTerm =
@@ -17,13 +21,22 @@ function Community() {
         return matchesSearchTerm;
     });
 
-    const handleNewTopic = async(topic) => {
+    const getTopic = async () => {
+        await axios.get(`http://localhost:5000/api/community`).then((res) => {
+            setTopics(res.data)
+        })
+    }
+
+    const handleNewTopic = async (topic) => {
         const obj = {
-            topic : topic,
-            username : state.user.username
+            topic: topic,
+            username: state.user.username
         }
+        console.log(obj)
         await axios.post(`http://localhost:5000/api/community`, obj).then((response) => {
-            setTopics([...topics, topic]);
+            if (response.status === 200) {
+                setTopics([...topics, topic]); // Update topics state with the new topic
+            }
         })
     };
 
@@ -34,7 +47,6 @@ function Community() {
     const handleSearch = event => {
         setSearchTerm(event.target.value);
     };
-
 
     return (
         <div>
@@ -55,21 +67,7 @@ function Community() {
                     <ul className="topics-list">
                         {topics.map((topic, index) => (
                             <li key={index} className="topic-item">
-                                <h3>{topic}</h3>
-
-                                {/* Render the list of comments for each topic */}
-                                <h4>Comments</h4>
-                                {comments.length === 0 ? (
-                                    <p>No comments available</p>
-                                ) : (
-                                    <ul className="comments-list">
-                                        {comments.map((comment, commentIndex) => (
-                                            <li key={commentIndex} className="comment-item">
-                                                <p>{comment}</p>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                )}
+                                <h3>{topic.topic}</h3>
 
                                 {/* Form to submit new comment */}
                                 <form
@@ -91,16 +89,17 @@ function Community() {
 
             {/* Form to submit new topic */}
             <form
-                onSubmit={(e) => {
+                onSubmit={async (e) => {
                     e.preventDefault();
                     const topic = e.target.topic.value;
-                    handleNewTopic(topic);
+                    await handleNewTopic(topic); // Await the handleNewTopic function
                     e.target.reset();
                 }}
             >
                 <input type="text" name="topic" placeholder="Enter your topic" />
                 <button type="submit">Add Topic</button>
             </form>
+
         </div>
     )
 }
