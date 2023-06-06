@@ -57,7 +57,7 @@ const Pages = () => {
         <Route path="/room/:id" element={<Room />} />
         <Route path="/rooms" element={<AllRooms />} />
         <Route path="/community" element={<Community />} />
-        <Route path="/topic" element={<Topic />} />
+        <Route path="/topic/:id" element={<Topic />} />
       </Routes>
     </>
   );

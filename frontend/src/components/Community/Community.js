@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './Cstyle.css';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
+import { Link } from 'react-router-dom';
 
 function Community() {
     const [topics, setTopics] = useState([]);
@@ -14,7 +16,7 @@ function Community() {
         getTopic();
     }, []);
 
-    const filteredMovies = topics.filter(topic => {
+    const filterCommunity = topics.filter(topic => {
         const regex = new RegExp(searchTerm, 'gi');
         const matchesSearchTerm =
             regex.test(topic.topic)
@@ -29,13 +31,14 @@ function Community() {
 
     const handleNewTopic = async (topic) => {
         const obj = {
+            id: uuidv4(),
             topic: topic,
             username: state.user.username
         }
         console.log(obj)
         await axios.post(`http://localhost:5000/api/community`, obj).then((response) => {
             if (response.status === 200) {
-                setTopics([...topics, topic]); // Update topics state with the new topic
+                setTopics([...topics, obj]); 
             }
         })
     };
@@ -60,27 +63,17 @@ function Community() {
                 />
             </div>
             {/* Render the list of topics */}
+            <h1>These are the current Topics talked about: </h1>
             <div className="topics-container">
                 {topics.length === 0 ? (
                     <p>No topics available</p>
                 ) : (
                     <ul className="topics-list">
-                        {topics.map((topic, index) => (
+                        {filterCommunity.map((topic, index) => (
                             <li key={index} className="topic-item">
-                                <h3>{topic.topic}</h3>
-
-                                {/* Form to submit new comment */}
-                                <form
-                                    onSubmit={(e) => {
-                                        e.preventDefault();
-                                        const comment = e.target.comment.value;
-                                        handleNewComment(comment);
-                                        e.target.reset();
-                                    }}
-                                >
-                                    <input type="text" name="comment" placeholder="Enter your comment" />
-                                    <button type="submit">Add Comment</button>
-                                </form>
+                                <h3>{topic.username}:</h3>
+                                <h1>{topic.topic}</h1>
+                                <Link to={`/topic/${topic.id}`}><button className='btn btn-primary'>Details</button></Link>
                             </li>
                         ))}
                     </ul>

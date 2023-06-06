@@ -33,6 +33,7 @@ namespace backend.Controllers
         {
             var newCommunity = new Community
             {
+                Id = community.Id,
                 Topic = community.Topic,
                 Username = community.Username
             };
