@@ -116,6 +116,15 @@ const Signup = () => {
               </button>
               <br />
               <br />
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <h6 style={{ marginRight: "5px" }}>Already have an account?</h6>
+                <Link to="/login">Log in</Link>
+              </div>
             </form>
           </div>
         </div>
