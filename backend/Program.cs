@@ -111,7 +111,7 @@ try
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-    await Seed.SeedAdminAsync(userManager, roleManager);
+    await Seed.SeedAdminAsync(userManager, roleManager, context);
 
     DbSeed.Seed(context);
     Console.WriteLine("-------->Data seeded successfully.");

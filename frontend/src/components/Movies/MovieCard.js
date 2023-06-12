@@ -5,7 +5,7 @@ function MovieCard({ movie }) {
   return (
     <div className="movie-card">
       <Link to={`/movies/${movie.id}`}>
-        <img src={movie.imageUrl} alt={movie.title} />
+        <img style={{width:'100px',height:'100px'}} src={movie.image} alt={movie.title} />
         <h3>{movie.title}</h3>
       </Link>
       <p>{movie.description}</p>

@@ -31,8 +31,8 @@ function MoviePlayer() {
   return (
     <div className="video-container">
       <h2>Now playing: {movie.title}</h2>
-      <video className="video-player" controls autoplay>
-        <source src="/Wednesday.mp4" type="video/mp4" />
+      <video className="video-player" controls autoplay >
+        <source src={`/movieTrailers/${movie.trailer}`} type="video/mp4" />
       </video>
     </div>
   );
