@@ -14,6 +14,7 @@ function HomePage() {
   useEffect(() => {
     const fetchTopMovies = async () => {
       const res = await axios.get('http://localhost:5000/api/movies');
+      console.log(res.data)
       const sortedMovies = res.data.sort((a, b) => b.viewCount - a.viewCount);
       const top3Movies = sortedMovies.slice(0, 3);
       setTopMovies(top3Movies);

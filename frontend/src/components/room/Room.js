@@ -33,7 +33,7 @@ function Room() {
     //let hubConnection = null;
 
     const handleClose = () => {
-        setShowPopup(false);
+        navigate('/rooms')
     };
 
     useEffect(() => {
@@ -141,6 +141,9 @@ function Room() {
                     });
                     setComments(room.comments);
                 }
+                if(!room.status){
+                    setShowPopup(true);
+                }
                 setCurrentRoom(room.currentRoom);
             });
 
@@ -154,9 +157,11 @@ function Room() {
     };
 
     const stopHubConnection = () => {
-        hubConnection
+        if(hubConnection){
+            hubConnection
             .stop()
             .catch((error) => console.log("Error stopping connection: ", error));
+        }
     };
 
     const clearComments = () => {

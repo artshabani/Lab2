@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using backend.Models;
 using backend.Data;
+using System.Security.Claims;
 
 namespace backend.Controllers
 {
@@ -10,12 +11,13 @@ namespace backend.Controllers
     [Route("api/[controller]")]
     public class RoomController : ControllerBase
     {
-        public readonly IHttpContextAccessor _httpContextAccessor;
         private readonly AppDbContext _context;
-        public RoomController(AppDbContext context, IHttpContextAccessor httpContextAccessor)
+        public readonly IHttpContextAccessor _accessor;
+
+        public RoomController(AppDbContext context, IHttpContextAccessor accessor)
         {
             _context = context;
-            _httpContextAccessor = httpContextAccessor;
+            _accessor = accessor;
         }
 
         [AllowAnonymous]
@@ -59,6 +61,10 @@ namespace backend.Controllers
 
             if (!room.Public)
             {
+                var email2 = _accessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
+
+                newRoom.UserEmails.Add(new UserEmails{UserEmail = email2});
+                
                 foreach (var email in room.UserEmails)
                 {
                     var newEmail = new UserEmails
@@ -79,7 +85,7 @@ namespace backend.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> EndRoom(Guid id)
         {
-            var room = await _context.Rooms.FindAsync(id);
+            var room = await _context.Rooms.Include(a => a.Comments).Include(a => a.UserEmails).FirstOrDefaultAsync(a => a.Id == id);
             room.Status = false;
 
             var result = await _context.SaveChangesAsync() > 0;

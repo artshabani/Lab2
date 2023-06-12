@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "bTCgqqw8oMOqfKX+qXoQzweoKA0TO15Ag6rbSFN5/TkibQJxU+yVwBwY5ayWjdJQCJrZpAtsadjK+VsWzHZQUw==",
+  "dgSpecHash": "1z23xH+Zt4+w6t2vSR8r0/8QTeAB9dQGxLXloa1LNFM8mcJ6+BGWlWo0sHWiQ7dQTohhueQ9LGf2qzRXysv/Bg==",
   "success": true,
   "projectFilePath": "/Users/idea/Desktop/lab2/Lab2/backend/backend.csproj",
   "expectedPackageFiles": [
     "/Users/idea/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
+    "/Users/idea/.nuget/packages/bouncycastle.cryptography/2.1.1/bouncycastle.cryptography.2.1.1.nupkg.sha512",
     "/Users/idea/.nuget/packages/humanizer.core/2.8.26/humanizer.core.2.8.26.nupkg.sha512",
+    "/Users/idea/.nuget/packages/mailkit/4.0.0/mailkit.4.0.0.nupkg.sha512",
     "/Users/idea/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/6.0.10/microsoft.aspnetcore.authentication.jwtbearer.6.0.10.nupkg.sha512",
     "/Users/idea/.nuget/packages/microsoft.aspnetcore.cryptography.internal/6.0.10/microsoft.aspnetcore.cryptography.internal.6.0.10.nupkg.sha512",
     "/Users/idea/.nuget/packages/microsoft.aspnetcore.cryptography.keyderivation/6.0.10/microsoft.aspnetcore.cryptography.keyderivation.6.0.10.nupkg.sha512",
@@ -43,6 +45,7 @@
     "/Users/idea/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
     "/Users/idea/.nuget/packages/microsoft.win32.registry/4.7.0/microsoft.win32.registry.4.7.0.nupkg.sha512",
     "/Users/idea/.nuget/packages/microsoft.win32.systemevents/4.7.0/microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "/Users/idea/.nuget/packages/mimekit/4.0.0/mimekit.4.0.0.nupkg.sha512",
     "/Users/idea/.nuget/packages/swashbuckle.aspnetcore/6.2.3/swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
     "/Users/idea/.nuget/packages/swashbuckle.aspnetcore.swagger/6.2.3/swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
     "/Users/idea/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.2.3/swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
@@ -51,24 +54,20 @@
     "/Users/idea/.nuget/packages/system.configuration.configurationmanager/4.7.0/system.configuration.configurationmanager.4.7.0.nupkg.sha512",
     "/Users/idea/.nuget/packages/system.diagnostics.diagnosticsource/6.0.0/system.diagnostics.diagnosticsource.6.0.0.nupkg.sha512",
     "/Users/idea/.nuget/packages/system.drawing.common/4.7.0/system.drawing.common.4.7.0.nupkg.sha512",
+    "/Users/idea/.nuget/packages/system.formats.asn1/6.0.0/system.formats.asn1.6.0.0.nupkg.sha512",
     "/Users/idea/.nuget/packages/system.identitymodel.tokens.jwt/6.17.0/system.identitymodel.tokens.jwt.6.17.0.nupkg.sha512",
     "/Users/idea/.nuget/packages/system.runtime.caching/4.7.0/system.runtime.caching.4.7.0.nupkg.sha512",
     "/Users/idea/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
     "/Users/idea/.nuget/packages/system.security.accesscontrol/4.7.0/system.security.accesscontrol.4.7.0.nupkg.sha512",
     "/Users/idea/.nuget/packages/system.security.cryptography.cng/4.5.0/system.security.cryptography.cng.4.5.0.nupkg.sha512",
+    "/Users/idea/.nuget/packages/system.security.cryptography.pkcs/6.0.2/system.security.cryptography.pkcs.6.0.2.nupkg.sha512",
     "/Users/idea/.nuget/packages/system.security.cryptography.protecteddata/4.7.0/system.security.cryptography.protecteddata.4.7.0.nupkg.sha512",
     "/Users/idea/.nuget/packages/system.security.permissions/4.7.0/system.security.permissions.4.7.0.nupkg.sha512",
     "/Users/idea/.nuget/packages/system.security.principal.windows/4.7.0/system.security.principal.windows.4.7.0.nupkg.sha512",
-    "/Users/idea/.nuget/packages/system.text.encoding.codepages/4.7.0/system.text.encoding.codepages.4.7.0.nupkg.sha512",
+    "/Users/idea/.nuget/packages/system.text.encoding.codepages/6.0.0/system.text.encoding.codepages.6.0.0.nupkg.sha512",
     "/Users/idea/.nuget/packages/system.windows.extensions/4.7.0/system.windows.extensions.4.7.0.nupkg.sha512"
   ],
   "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file /Users/idea/Desktop/lab2/Lab2/backend/obj/project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    },
     {
       "code": "NU1603",
       "level": "Warning",
