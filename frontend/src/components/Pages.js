@@ -28,6 +28,9 @@ import Room from './room/Room';
 import AllRooms from './room/AllRooms';
 import Community from './Community/Community';
 import Topic from './Community/Topic';
+import Settings from './Navbar/Settings';
+import Help from './Navbar/Help';
+import ProfileDetails from './Navbar/ProfileDetails';
 
 const Pages = () => {
   return (
@@ -58,6 +61,9 @@ const Pages = () => {
         <Route path="/rooms" element={<AllRooms />} />
         <Route path="/community" element={<Community />} />
         <Route path="/topic/:id" element={<Topic />} />
+        <Route path="/profiledetails" element={<ProfileDetails />} />
+        <Route path="/help" element={<Help />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </>
   );
