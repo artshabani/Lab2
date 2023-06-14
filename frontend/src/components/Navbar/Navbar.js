@@ -106,7 +106,7 @@ const Navbar = () => {
           <hr />
           <a href="#" className="sub-menu-link">
             <img src={profileIcon} alt="art" />
-            <p>Edit Profile</p>
+            <p>Profile Details</p>
           </a>
           <a href="#" className="sub-menu-link">
             <img src={settingIcon} alt="art" />
