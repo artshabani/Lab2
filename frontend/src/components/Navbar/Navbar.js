@@ -104,18 +104,24 @@ const Navbar = () => {
             </>
           )}
           <hr />
+          <Link to="/profiledetails">
           <a href="#" className="sub-menu-link">
             <img src={profileIcon} alt="art" />
             <p>Profile Details</p>
           </a>
+          </Link>
+          <Link to="/settings">
           <a href="#" className="sub-menu-link">
             <img src={settingIcon} alt="art" />
             <p>Settings & Privacy</p>
           </a>
+          </Link>
+          <Link to="/help">
           <a href="#" className="sub-menu-link">
             <img src={helpIcon} alt="art" />
             <p>Help & Support</p>
           </a>
+          </Link>
           {state.user && (
             <>
               <a href="#" onClick={handleLogOut} className="sub-menu-link">
