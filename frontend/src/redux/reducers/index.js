@@ -1,7 +1,8 @@
-import { SET_USER } from '../actions/types';
+import { SET_USER, SET_SUBSCRIBE } from '../actions/types';
 
 const initialUserState = {
     user: null,
+    subscribe: 0,
 };
 
 const rootReducer = (state = initialUserState, action) => {
@@ -10,6 +11,11 @@ const rootReducer = (state = initialUserState, action) => {
             return {
                 ...state,
                 user: action.user
+            }
+        case SET_SUBSCRIBE:
+            return {
+                ...state,
+                subscribe: action.subscribe
             }
         default:
             return state;

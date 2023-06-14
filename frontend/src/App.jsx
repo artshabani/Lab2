@@ -3,7 +3,7 @@ import './App.css';
 import Pages from './components/Pages';
 import axios from 'axios';
 import { BarLoader } from 'react-spinner-animated';
-import { setUser } from './redux/actions/index'
+import { setSubscribe, setUser } from './redux/actions/index'
 import { useDispatch } from 'react-redux';
 
 function App() {
@@ -15,7 +15,11 @@ function App() {
     const getUser = async () => {
       setLoading(true);
       if (token) {
-        await axios.get("http://localhost:5000/api/account").then((res) => dispatch(setUser(res.data)));
+        await axios.get("http://localhost:5000/api/account").then((res) => {
+          dispatch(setUser(res.data))
+          dispatch(setSubscribe(res.data.subscribed))
+          console.log(res.data.subscribed)
+        });
       }
       setLoading(false);
     }

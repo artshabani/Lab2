@@ -24,13 +24,17 @@ const CreateRoom = () => {
 
   const handleCreateRoom = async (e) => {
     e.preventDefault();
-    if (room.userEmails.length === 0 && !room.public) {
-      setError2('Please add an email');
+    if (state.subscribe !== 0) {
+      if (room.userEmails.length === 0 && !room.public) {
+        setError2('Please add an email');
+      } else {
+        setError2('');
+        await axios.post(`http://localhost:5000/api/room`, room);
+        console.log(room)
+        navigate(`/room/${room.id}`)
+      }
     } else {
-      setError2('');
-      await axios.post(`http://localhost:5000/api/room`, room);
-      console.log(room)
-      navigate(`/room/${room.id}`)
+      window.alert("You're not subscribed, you can't create a room!");
     }
   };
 

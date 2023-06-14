@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { setUser } from "../../../redux/actions";
+import { setSubscribe, setUser } from "../../../redux/actions";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -39,6 +39,7 @@ const Login = () => {
         response.json().then((result) => {
           localStorage.setItem("token", result.token);
           dispatch(setUser(result))
+          dispatch(setSubscribe(result.subscribe))
         });
 
         if (response.ok) {

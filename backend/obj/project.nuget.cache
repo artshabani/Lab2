@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "1z23xH+Zt4+w6t2vSR8r0/8QTeAB9dQGxLXloa1LNFM8mcJ6+BGWlWo0sHWiQ7dQTohhueQ9LGf2qzRXysv/Bg==",
+  "dgSpecHash": "aDs5Sivv2Fg1IQoW21DEUstsoMgsdIqQqzQnCCoZsHtF0Q5yP1I/SXYqZGkVO5dSjtUnPkaSlZgOsrCYxLvtag==",
   "success": true,
   "projectFilePath": "/Users/idea/Desktop/lab2/Lab2/backend/backend.csproj",
   "expectedPackageFiles": [
@@ -46,6 +46,8 @@
     "/Users/idea/.nuget/packages/microsoft.win32.registry/4.7.0/microsoft.win32.registry.4.7.0.nupkg.sha512",
     "/Users/idea/.nuget/packages/microsoft.win32.systemevents/4.7.0/microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "/Users/idea/.nuget/packages/mimekit/4.0.0/mimekit.4.0.0.nupkg.sha512",
+    "/Users/idea/.nuget/packages/mysqlconnector/2.1.2/mysqlconnector.2.1.2.nupkg.sha512",
+    "/Users/idea/.nuget/packages/pomelo.entityframeworkcore.mysql/6.0.2/pomelo.entityframeworkcore.mysql.6.0.2.nupkg.sha512",
     "/Users/idea/.nuget/packages/swashbuckle.aspnetcore/6.2.3/swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
     "/Users/idea/.nuget/packages/swashbuckle.aspnetcore.swagger/6.2.3/swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
     "/Users/idea/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.2.3/swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",

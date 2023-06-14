@@ -230,6 +230,7 @@ namespace backend.Controllers
                 Email = user.Email,
                 Token = GenerateJwtToken(user, roles),
                 UserRoles = roles,
+                Subscribed = user.Subscribed
             };
         }
     }

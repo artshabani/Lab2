@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '../../../redux/actions';
+import { setSubscribe, setUser } from '../../../redux/actions';
 
 const Signup = () => {
   const [name, setName] = useState('');
@@ -38,6 +38,7 @@ const Signup = () => {
       response.json().then((result) => {
         localStorage.setItem('token', result.token);
         dispatch(setUser(result))
+        dispatch(setSubscribe(result.subscribe))
       });
     });
   };

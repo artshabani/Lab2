@@ -2,11 +2,14 @@
     border: 1px solid black;
     padding: 10px;
     margin-bottom: 10px;
-    width: 700px;
+    width: 1300px;
+    margin: 0 auto;
 }
 
 .topic-item {
     margin-bottom: 10px;
+  border-bottom: 1px solid #ccc; /* Add a border as a line separator */
+  padding-bottom: 10px;
 }
 
 .comment-item {

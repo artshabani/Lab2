@@ -2,30 +2,32 @@ import React, { useEffect, useRef, useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Card from 'react-bootstrap/Card';
+import starImage from '../../assets/star.png';
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setSubscribe } from "../../redux/actions";
 
 function Subscription(props) {
-    const [clickedStates, setClickedStates] = useState([false, false, false]);
+    const [clickedStates, setClickedStates] = useState(0);
     const modalRef = useRef(null);
+    const dispatch = useDispatch();
 
-    const handleClick = (index) => {
-        const newClickedStates = [...clickedStates];
-        newClickedStates[index] = !newClickedStates[index];
-        setClickedStates(newClickedStates);
-    };
+    const state = useSelector(state => state);
 
     useEffect(() => {
-        const handleOutsideClick = (event) => {
-            if (modalRef.current && !modalRef.current.contains(event.target)) {
-                setClickedStates([false, false, false]);
-            }
-        };
+        setClickedStates(state.subscribe);
+    }, [state.subscribe]);
 
-        document.addEventListener('click', handleOutsideClick);
+    const handleClick = (index) => {
+        setClickedStates(index);
+    };
 
-        return () => {
-            document.removeEventListener('click', handleOutsideClick);
-        };
-    }, []);
+    async function subscribe(subId) {
+        await axios.post(`http://localhost:5000/api/subscription`, { subId: subId }).then((res) => {
+            dispatch(setSubscribe(res.data))
+            props.onHide()
+        })
+    }
 
     return (
         <>
@@ -44,11 +46,11 @@ function Subscription(props) {
                 <Modal.Body>
                     <h4>Subscription Offers</h4>
                     <div ref={modalRef} style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Card className={clickedStates[0] ? "border-danger" : ""} style={{ width: '30%', margin: '0 5px', height: '300px' }} onClick={() => handleClick(0)}>
+                        <Card className={clickedStates === 1 ? "border-danger" : ""} style={{ width: '30%', margin: '0 5px', height: '300px' }} onClick={() => handleClick(1)}>
                             <Card.Body>
                                 <Card.Title>Basic Subscription</Card.Title>
                                 <Card.Text>
-
+                                    <img src={starImage} alt="Star" style={{ height: '40px', width: '40px' }} />
                                 </Card.Text>
                             </Card.Body>
                             <Card.Footer>
@@ -58,11 +60,12 @@ function Subscription(props) {
                             </Card.Footer>
                         </Card>
 
-                        <Card className={clickedStates[1] ? "border-danger" : ""} style={{ width: '30%', margin: '0 5px' }} onClick={() => handleClick(1)}>
+                        <Card className={clickedStates === 2 ? "border-danger" : ""} style={{ width: '30%', margin: '0 5px' }} onClick={() => handleClick(2)}>
                             <Card.Body>
                                 <Card.Title>Standard Subscription</Card.Title>
                                 <Card.Text>
-
+                                    <img src={starImage} alt="Star" style={{ height: '40px', width: '40px' }} />
+                                    <img src={starImage} alt="Star" style={{ height: '40px', width: '40px' }} />
                                 </Card.Text>
                             </Card.Body>
                             <Card.Footer>
@@ -72,11 +75,13 @@ function Subscription(props) {
                             </Card.Footer>
                         </Card>
 
-                        <Card className={clickedStates[2] ? "border-danger" : ""} style={{ width: '30%', margin: '0 5px' }} onClick={() => handleClick(2)}>
+                        <Card className={clickedStates === 3 ? "border-danger" : ""} style={{ width: '30%', margin: '0 5px' }} onClick={() => handleClick(3)}>
                             <Card.Body>
                                 <Card.Title>Premium Subscription</Card.Title>
                                 <Card.Text>
-
+                                    <img src={starImage} alt="Star" style={{ height: '40px', width: '40px' }} />
+                                    <img src={starImage} alt="Star" style={{ height: '40px', width: '40px' }} />
+                                    <img src={starImage} alt="Star" style={{ height: '40px', width: '40px' }} />
                                 </Card.Text>
                             </Card.Body>
                             <Card.Footer>
@@ -88,7 +93,7 @@ function Subscription(props) {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button className="btn btn-danger">Subscribe</Button>
+                    <Button onClick={() => subscribe(clickedStates)} className="btn btn-danger">Subscribe</Button>
                     <Button onClick={props.onHide}>Close</Button>
                 </Modal.Footer>
             </Modal>

@@ -20,7 +20,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext")));
+{
+    var connectionString = builder.Configuration.GetConnectionString("DbContext");
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+});
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", builder => builder

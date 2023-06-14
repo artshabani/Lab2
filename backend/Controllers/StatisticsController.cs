@@ -56,20 +56,20 @@ namespace backend.Controllers
                 };
         }
 
-        [HttpGet("donut")]
-        public async Task<IEnumerable<int>> Donut()
-        {
-            var viewCounts = new int[12];
+        // [HttpGet("donut")]
+        // public async Task<IEnumerable<int>> Donut()
+        // {
+        //     var viewCounts = new int[12];
 
-            foreach (Genre genre in Enum.GetValues(typeof(Genre)))
-            {
-                var moviesByGenre = await _context.Movies.Where(p => p.Genre == genre).ToListAsync();
-                for (var i = 1; i <= 12; i++)
-                {
-                    viewCounts[i - 1] += moviesByGenre.Where(p => p.ViewCount == i).Count();
-                }
-            }
-            return viewCounts;
-        }
+        //     foreach (Genre genre in Enum.GetValues(typeof(Genre)))
+        //     {
+        //         var moviesByGenre = await _context.Movies.Where(p => p.Genre == genre).ToListAsync();
+        //         for (var i = 1; i <= 12; i++)
+        //         {
+        //             viewCounts[i - 1] += moviesByGenre.Where(p => p.ViewCount == i).Count();
+        //         }
+        //     }
+        //     return viewCounts;
+        // }
     }
 }
