@@ -12,6 +12,8 @@ using backend.Models;
 using System.IdentityModel.Tokens.Jwt;
 using Data;
 using backend.SignalR;
+using MongoDB.Driver;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -75,6 +77,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
               };
           }
 );
+
+// Get the MongoDB connection string from appsettings.json
+var mongoConnectionString = builder.Configuration.GetConnectionString("MongoDb");
+
+// Set up the MongoDB client
+var mongoClient = new MongoClient(mongoConnectionString);
+
+// Register the MongoDB client with the dependency injection container
+builder.Services.AddSingleton(mongoClient);
 
 //i want to get the user that registered
 builder.Services.AddHttpContextAccessor();

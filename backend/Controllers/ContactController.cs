@@ -1,53 +1,54 @@
+using backend.Models;
 using Microsoft.AspNetCore.Mvc;
-using MimeKit;
-using MailKit.Net.Smtp;
+using Microsoft.Extensions.Configuration;
+using MongoDB.Driver;
 
 namespace YourProject.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ContactController : ControllerBase
     {
+        private readonly IConfiguration _configuration;
+        private readonly IMongoCollection<Contact> _contactsCollection;
+        public ContactController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+
+            // Get the MongoDB connection string from the configuration
+            var mongoConnectionString = _configuration.GetConnectionString("MongoDb");
+
+            // Set up the MongoDB client
+            var mongoClient = new MongoClient(mongoConnectionString);
+
+            // Get the reference to the database and collection
+            var database = mongoClient.GetDatabase("lab2");
+            _contactsCollection = database.GetCollection<Contact>("Contacts");
+
+        }
+
         [HttpPost]
-        public IActionResult SendEmail(EmailModel emailModel)
+        public async Task<IActionResult> SendMessage([FromBody] Contact contact)
         {
             try
             {
-                // Create the email message
-                var emailMessage = new MimeMessage();
-                emailMessage.From.Add(new MailboxAddress("Your Company", "yourcompany@example.com"));
-                emailMessage.To.Add(new MailboxAddress("Recipient", emailModel.Email));
-                emailMessage.Subject = emailModel.Subject;
-                emailMessage.Body = new TextPart("plain")
+                // Validate the contact data (optional)
+                if (!ModelState.IsValid)
                 {
-                    Text = emailModel.Message
-                };
-
-                // Configure the SMTP client
-                using (var smtpClient = new SmtpClient())
-                {
-                    smtpClient.Connect("smtp.example.com", 587, false);
-                    smtpClient.Authenticate("yourcompany@example.com", "your_password");
-
-                    // Send the email
-                    smtpClient.Send(emailMessage);
-                    smtpClient.Disconnect(true);
+                    return BadRequest(ModelState);
                 }
+
+                // Save the contact information to MongoDB
+                _contactsCollection.InsertOne(contact);
 
                 return Ok();
             }
             catch (Exception ex)
             {
-                // Handle any exceptions that occurred during the email sending process
-                return BadRequest(ex.Message);
+                // Handle any exceptions that occur during the saving process
+                return StatusCode(500, ex.Message);
             }
         }
-    }
 
-    public class EmailModel
-    {
-        public string Email { get; set; }
-        public string Subject { get; set; }
-        public string Message { get; set; }
     }
 }
