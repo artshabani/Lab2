@@ -1,7 +1,7 @@
 import React, { Component, useState } from "react";
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from "axios";
+import axios from 'axios';
 
 function ContactUs() {
     const [name, setName] = useState('');
