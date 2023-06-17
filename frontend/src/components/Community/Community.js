@@ -53,6 +53,7 @@ function Community() {
 
     return (
         <div>
+            <br/>
             <div className="search-bar">
                 <input
                     className="search-input"
@@ -62,6 +63,7 @@ function Community() {
                     onChange={handleSearch}
                 />
             </div>
+            <br/>
             <div className="card shadow mb-4">
                 <div className="card-header py-3">  
                         <h3 style={{ textAlign: 'left' }}>Current Topics</h3>
@@ -88,8 +90,8 @@ function Community() {
                             <ul className="topics-list">
                                 {filterCommunity.map((topic, index) => (
                                     <li key={index} className="topic-item">
-                                        <h3>{topic.username}:</h3>
                                         <h1>{topic.topic}</h1>
+                                        <h3>Added by :{topic.username}</h3>
                                         <Link to={`/topic/${topic.id}`}><button className='btn btn-primary'>Details</button></Link>
                                     </li>
                                 ))}
@@ -98,37 +100,6 @@ function Community() {
                     </div>
                 </div>
             </div>
-
-
-            {/* <div className="topics-container">
-                {topics.length === 0 ? (
-                    <p>No topics available</p>
-                ) : (
-                    <ul className="topics-list">
-                        {filterCommunity.map((topic, index) => (
-                            <li key={index} className="topic-item">
-                                <h3>{topic.username}:</h3>
-                                <h1>{topic.topic}</h1>
-                                <Link to={`/topic/${topic.id}`}><button className='btn btn-primary'>Details</button></Link>
-                            </li>
-                        ))}
-                    </ul>
-                )}
-            </div> */}
-
-            {/* Form to submit new topic */}
-            {/* <form
-                onSubmit={async (e) => {
-                    e.preventDefault();
-                    const topic = e.target.topic.value;
-                    await handleNewTopic(topic); // Await the handleNewTopic function
-                    e.target.reset();
-                }}
-            >
-                <input type="text" name="topic" placeholder="Enter your topic" />
-                <button type="submit">Add Topic</button>
-            </form> */}
-
         </div>
     )
 }

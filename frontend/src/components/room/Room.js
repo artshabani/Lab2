@@ -188,7 +188,7 @@ function Room() {
             <div class="video-container">
                 <h2>Now playing: {movie.title}</h2>
                 <video class="video-player" controls autoplay>
-                    <source src="/Wednesday.mp4" type="video/mp4" />
+                    <source src={`/movieTrailers/${movie.trailer}`} type="video/mp4" />
                 </video>
                 <button className='btn btn-danger' onClick={endRoom}>End Room</button>
                 <OverlayTrigger

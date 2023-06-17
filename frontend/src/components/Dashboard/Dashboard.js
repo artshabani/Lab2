@@ -99,7 +99,7 @@ function Dashboard() {
                             </div>
                         </div>
                     </div>
-                    <Statistics/>
+                    <Statistics />
                 </div>
             </div>
         </>

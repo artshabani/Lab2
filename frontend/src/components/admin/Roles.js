@@ -45,10 +45,6 @@ function Roles() {
                                     <td>{role.id}</td>
                                     <td>{role.name}</td>
                                     <td>
-                                        <button className='btn btn-primary'>
-                                        <Link to={`/edituserinrole/${roleId}`} className="nav-link">
-                                            Add or Remove Users
-                                        </Link></button>
                                         <button className='btn btn-danger'>
                                         <Link to={`/deleterole/${role.id}`} className="nav-link">
                                             Delete

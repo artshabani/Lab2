@@ -32,15 +32,22 @@ namespace backend.Controllers
 
         //duhesh me bo ni foreach per mi barazu userat me role
         //se sdi qa ke bA
-        // [HttpGet("users")]
-        // public async Task<ActionResult<List<AppUserDto>>> GetAllUsers()
-        // {
-        //     var users = await _userManager.Users.ToListAsync();
+        [HttpGet("users")]
+        public async Task<ActionResult<List<AppUserDto>>> GetAllUsers()
+        {
+            var users = await _userManager.Users.ToListAsync();
 
-        //     var userDtos = users.Select(user => createUserObject(user)).ToList();
+            var usersWithRoles = new List<AppUserDto>();
 
-        //     return Ok(userDtos);
-        // }
+            foreach(AppUser user in users){
+                var roles = await _userManager.GetRolesAsync(user);
+                var convertedRole = new List<string>(roles);
+                var userRoles = createUserObject(user, convertedRole);
+                usersWithRoles.Add(userRoles);
+            }
+
+            return Ok(usersWithRoles);
+        }
 
         [HttpPut("{id}")]
 

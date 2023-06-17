@@ -21,30 +21,21 @@ function ContactUs() {
         console.log(obj)
         try {
             const response = await axios.post("http://localhost:5000/api/contact", obj);
-            console.log(response); // Log the response for debugging
+            console.log(response); 
 
             if (response.status === 200) {
-                console.log(obj); // Log the object for debugging
+                console.log(obj); 
                 window.location.href = "/ThankYou";
             } else {
                 console.log("Request failed");
             }
         } catch (error) {
-            console.error(error); // Log any errors for debugging
+            console.error(error); 
         }
-        // await axios.post(`http://localhost:5000/api/contact`, obj).then((response) => {
-        //     if (response.status === 200) {
-        //         console.log(obj)
-        //         //setMessage([...messages, obj]);
-        //         window.location.href = "/ThankYou";
-        //     } else {
-        //         console.log("nope")
-        //     }
-        // })
     };
 
     return (
-        <section className='card p-3 bg-light' style={{ width: 800, display: 'inline-block', top: 30 }}>
+        <section className='card p-3 bg-light' style={{ width: 1000, display: 'inline-block', top: 30, border: '2px solid pink', backgroundColor: 'white' }}>
             <h2 className="h1-responsive font-weight-bold text-center my-4">Contact us</h2>
             <p className="text-center w-responsive mx-auto mb-5">
                 Do you have any questions? Please do not hesitate to contact us directly. Our team will come back to you within a matter of hours to help you.
